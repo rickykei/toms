@@ -1,0 +1,36 @@
+@charset "utf-8";
+body {
+	background-color: #CCCCCC;
+}
+.style7 {
+	color: #000000;
+	font-size: 12px;
+}
+.style6 {
+	color: #FFFFFF;
+	font-size: 14px;
+	font-style: normal;
+	font-family: "arial";
+}
+.blocktextbox { background-color : #CCCCCC; color : #000000; cursor : auto; }
+
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+a:link {
+	color: #FFF;
+}
+a:visited {
+	color: #FFF;
+}
+a:hover {
+	color: #FFF;
+}
+a:active {
+	color: #FFF;
+}
+-->

@@ -1,0 +1,219 @@
+.content {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #666666;
+	text-align: justify;
+}
+.headline {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 11pt;
+	color: #FFFFFF;
+	font-weight: bold;
+
+}
+.highlight {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	font-weight: bold;
+	color: #666666;
+	text-align: justify;
+}
+.smallwords {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 8pt;
+	color: #999999;
+}
+.title {
+
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 11pt;
+	color: #9EBD0D;
+	font-weight: bold;
+}
+.box {
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #666666;
+
+}
+.button {
+	background-color: #9ebd0b;
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-top: 1px solid #9ebd0b;
+	border-right: 1px solid #586A05;
+	border-bottom: 1px solid #586A05;
+	border-left: 1px solid #9ebd0b;
+	padding-right: 3px;
+	padding-left: 3px;
+
+
+
+}
+.tcContent {
+	font-family: "新細明體";
+	font-size: 12px;
+	color: #666666;
+}
+.tcTitle {
+
+
+	font-family: "新細明體";
+	font-size: 16px;
+	color: #9EBD0D;
+	font-weight: bold;
+}
+.tcHighlight {
+
+	font-family: "新細明體";
+	font-size: 13px;
+	font-weight: bold;
+	color: #666666;
+	text-align: justify;
+}
+.tcBox {
+
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	font-family: "新細明體";
+	font-size: 12px;
+	color: #666666;
+}
+.tcButton {
+
+	background-color: #9ebd0b;
+	font-family: "新細明體";
+	font-size: 12px;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-top: 1px solid #9ebd0b;
+	border-right: 1px solid #586A05;
+	border-bottom: 1px solid #586A05;
+	border-left: 1px solid #9ebd0b;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.button1 {
+	background-color: #9ebd0b;
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-top: 1px solid #9ebd0b;
+	border-right: 1px solid #586A05;
+	border-bottom: 1px solid #586A05;
+	border-left: 1px solid #9ebd0b;
+	margin: 0px;
+	padding: 0px;
+
+}
+.title1 {
+
+
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #FF6633;
+	font-weight: bold;
+}
+.tableBGcolor {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #666666;
+	background-color: #f5f5f5;
+
+}
+.contentNojust {
+
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #666666;
+}
+a:link {
+	color: #666600;
+	text-decoration: none;
+}
+a:visited {
+	color: #666600;
+	text-decoration: none;
+}
+a:hover {
+	color: #FF9900;
+}
+.tableHead {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #C0C0C0;
+}
+.smallcontent {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 8pt;
+	color: #666666;
+	background-color: #f5f5f5;
+
+}
+.SUBtableBGcolor {
+
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #666666;
+	background-color: #E1E1E1;
+}
+.smallcontentRed {
+
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 8pt;
+	color: #FF0000;
+	background-color: #f5f5f5;
+}
+.boxSmall {
+
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 8pt;
+	color: #666666;
+}
+.button2 {
+
+	background-color: #FF9900;
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-top: 1px solid #FFCC00;
+	border-right: 1px solid #CC6600;
+	border-bottom: 1px solid #CC6600;
+	border-left: 1px solid #FFCC00;
+	margin: 0px;
+	padding: 0px;
+}
+.YellowBG {
+	background-color: #F5f5f5;
+	color: #000000;
+
+}
+.BlueBG {
+	color: #000000;
+	background-color: #97D6FB;
+}
+.OrangeBG {
+	color: #000000;
+	background-color: #FFCC00;
+}
+.GreyBG {
+
+	color: #000000;
+	background-color: #CDCDCD;
+}
+.RedBG {
+
+
+	color: #000000;
+	background-color: #E98196;
+}

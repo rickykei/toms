@@ -1,0 +1,534 @@
+<?php
+
+class Table {
+	
+	var $result;
+	var $row;
+	var $debug;
+	var $table_name,$checktotal;
+	
+   function Table($sql,$debug,$table_name,$from_add)
+   {
+   	include("config.php3");
+   	
+   	if ($sql!="")
+   	{
+   		$result = mysql_query ("$sql");
+   	
+   		$this->sql=$sql;
+   		$this->debug=$debug;
+   		$this->table_name=$table_name;
+   		$this->link=$link;
+   	
+   		if ($debug==1)
+   		echo "sql=$sql"."<p>";
+		$row=mysql_fetch_array ($result);
+		$this->row=$row;
+			
+       	$checktotal= mysql_num_rows($result);
+		$this->checktotal=$checktotal;
+		if ($debug==1)
+		{
+		echo "class.checktotal=".$checktotal."<p>";
+		echo "server".$GLOBALS[PHP_SELF];
+		echo "server".$GLOBALS[SCRIPT_FILENAME];
+		echo "server".$GLOBALS[QUERY_STRING];
+		echo "server".$GLOBALS[HTTP_REFERER];
+		}
+		echo "<a href=javascript:window.history.back();>上一頁</a>";
+		echo $GLOBALS[_SESSION];
+   		$this->sql=$sql;
+   		$this->result=$result;
+   	   }//endif
+   }//end f table
+   
+   function get_table_field_name($table_name)
+   {
+  
+     $i=0;
+     $query=$this->sql;
+     $rows=mysql_query($query);
+     $i = 0;
+	while ($i < mysql_num_fields($rows)) 
+	{
+   		$meta = mysql_fetch_field($rows, $i);
+   		if (!$meta)
+   		{
+		echo "No information available<br />\n";
+   		}
+	$field[$i]=$meta->name;
+	$i++;
+	}
+     return $field;
+   }
+   
+   
+   ########################
+   ##檢視入貨表
+   ##########################
+   function table_goods_show_printing($offset,$rowset)
+   {
+	$field_name=$this->get_table_field_name("in_goods");
+	$no_field_name=count($field_name);
+   	/////////////////////////////
+   	//table navigation bar
+   	/////////////////////////////
+		if ($rowset<=0 || $rowset=="" )$rowset=10;
+		if ($offset<=0 || $offset=="" || $offset>=$this->checktotal)
+		if ($offset>=$this->checktotal)
+		$offset=$offset-$rowset;
+		else
+		$offset=0;
+		
+   	$this->sql=$this->sql." LIMIT ".$offset.",".$rowset;
+   	if ($this->debug==1)
+	echo $this->sql;
+   	$result = mysql_query ("$this->sql");
+
+   ?>
+	<table border=0>
+	<tr><td>
+	<form method="post" action="<? echo $_SERVER['PHP_SELF'];?>?offset=0&rowset=<?echo $rowset;?>"><input type="submit" value="開始 &lt;&lt;"></form>
+	</td>
+    	<td>
+    	<form method="post" action="<? echo $_SERVER['PHP_SELF'];?>?offset=<?$a=$offset-$rowset;echo $a;?>&rowset=<?echo $rowset?>">
+		<input type="submit" value="前一個 &lt;">
+		</form>
+    	</td>
+
+    	<td>
+	<?$a=$offset+$rowset;?>
+	<form method="post" action="<? echo $_SERVER['PHP_SELF'];?>"><input type="submit" value="後一個>">
+        <input type="hidden" name="rowset" size="3" value="<?echo $rowset;?>">
+        <input type="hidden" name="offset"  size="3" value="<?echo $a;?>">
+     	</form>
+     	</td>
+    	<td><? $a=$this->checktotal-$rowset;?><form method="post" onsubmit="return true" action="<? echo $_SERVER['PHP_SELF'];?>"><input type="hidden" name="rowset" value="<? echo $rowset;?>">
+	<input type="hidden" name="offset" value="<? echo $a;?>">
+	<input type="submit" value="結束>>"></form>
+    	</td>
+    	</tr>
+	</table>
+	<?
+	/////////////////////////////
+   	//table navigation bar
+   	/////////////////////////////
+	///////////////////////////
+    //table content viewing
+    //////////////////////////////
+    ?>
+		 
+         <table width="100%" border="1" bgcolor="CCCCCC">
+         <tr>
+		 
+    <td bgcolor="#FFdd66">刪除</td>
+		 
+    <td bgcolor="#FFdd66">檢視</td>
+         <?
+          for ($i=0;$i<$no_field_name;$i++)
+         {
+         	echo "<td bgcolor=\"#FFdd66\">$field_name[$i]</td>";
+         }
+         ?>
+         
+    <td bgcolor="#FFdd66">更改</td>
+         </tr>
+         <?
+      $chodd=0;
+      while ($row=mysql_fetch_array($result))
+      {
+
+            if (($chodd % 2)==1)
+               //$bgcolor="ddbb66"; 
+			   $bgcolor="#f6f6f6";
+            else
+               //$bgcolor="eecc66";
+			   $bgcolor="#ffffff";
+			   
+            ?>
+	    <tr>
+		<td bgcolor="<? echo "$bgcolor"?>"><a href="javascript:check_del('<? echo $row[0]; ?>')"> [刪除]</a></td>
+		<td bgcolor="<? echo "$bgcolor"?>"><a href="javascript:view_detail('<?echo $row[1];?>')"> [檢視]</a></td>
+		<td bgcolor="<? echo "$bgcolor"?>"><?echo $row[0];?></td>
+
+	    <td bgcolor="<? echo "$bgcolor"?>"><? echo $row[1];?></td>
+            <td bgcolor="<? echo "$bgcolor"?>"><? echo $row[2];?></td>
+            <td bgcolor="<? echo "$bgcolor"?>"><? echo $row[3];?></td>
+            <td bgcolor="<? echo "$bgcolor"?>"><? echo $row[4];?></td>
+            <td bgcolor="<? echo "$bgcolor"?>"><? echo $row[5];?></td>
+            <td bgcolor="<? echo "$bgcolor"?>"><form name="form" method="post" action="check_price_edit.php3">
+            <input type="hidden" name="id" value="<?echo $row["ref_no"];?>" class="login">
+            <input type="submit" name="submit" value="更改" class="login">
+            </form></td></tr>
+			<?
+            $chodd=$chodd+1;
+
+    
+      } //end while
+       ?></table>
+
+   	<?
+   	mysql_free_result($result);
+   }//end function
+   
+   
+   
+   //入貨時..DATA checking waiting confirm..
+   //goods_add.php3
+   function table_in_goods_datacheck_printing($bg1,$bg2)
+   {
+   ?>
+   <table width="609" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td width="52%" bgcolor="#CC9900" height="21"><font face="新細明體" size="3" color="#FFFFFF"><b>入貨表</b></font></td>
+      <td width="48%" height="21"><font face="新細明體" color="#0066CC" size="2">
+        212.000        港元 &lt;--&gt; 
+        1.000        日元 </font></td>
+   </tr>
+   </table>
+   <table border="0" width="737" height="20" cellspacing="0" cellpadding="0">
+    <tr> 
+      <th width="23" height="20" bgcolor="#FFdd66"> 
+        <div align="left"></div>
+      </th>
+      <th width="137" height="20" bgcolor="#FFdd66">
+        <div align="right"><font face="新細明體" color="#0066CC" size="2">REFERENCE_NO 
+          </font></div>
+      </th>
+      <th width="116" height="20" bgcolor="#FFdd66"> 
+        <div align="left"><font face="新細明體" color="#FFFFFF" size="2"> 
+          <? echo $ref_no;?>
+          </font></div>
+      </th>
+      <td width="56" height="20" bgcolor="#FFdd66"> 
+        <div align="center"><font color="#0066CC" size="2">買入由</font></div>
+      </td>
+      <td width="162" height="20" bgcolor="#FFdd66"><font color="#0066CC"> 
+        <? echo $company_name;?>
+        </font></td>
+      <td width="127" height="20"></td>
+      <td height="20" width="64">&nbsp;</td>
+      <td height="20" width="52">&nbsp;</td>
+    </tr>
+    </table>
+	<?
+	}
+
+	function table_goods_datacheck_printing($bg1,$bg2,$no_of_rows)
+	{
+
+	echo "<table><tr>
+      <td width=\"23\" bgcolor=\"#FFCC66\" height=\"21\">&nbsp;</td>
+      <td bgcolor=\"#FFCC66\" width=\"137\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">貨物Part 
+        NO</font></td>
+      <td width=\"116\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">成本價格/每件 
+        $</font> </td>
+      <td width=\"56\" bgcolor=\"#FFCC66\" height=\"21\"> <font face=\"新細明體\" color=\"#0066CC\" size=\"2\">貨幣</font></td>
+      <td width=\"162\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">買入存量</font><font color=\"#0066CC\">大圍 
+        </font></td>
+      <td width=\"127\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">買入存量</font><font color=\"#0066CC\">旺角</font></td>
+      <td width=\"64\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">存貨地: 
+        </font></td>
+      <td height=\"21\" bgcolor=\"#99CCFF\" width=\"52\">&nbsp; </td>
+    </tr>";
+	for ($i=0;$i<$no_of_entry;$i++)
+	{
+	echo "
+        <tr> 
+      <td width=\"23\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"> 
+        <div align=\"center\"><font face=\"新細明體\" color=\"#000000\" size=\"2\"> 
+          $i</font></div>
+      </td>
+      <td bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\"  width=\"137\" height=\"20\"><font face=\"新細明體\" color=\"#FFFFFF\" size=\"2\"> 
+       $goods_partno[$i]
+        </font></td>
+      <td width=\"116\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"> 
+        $cost[$i]
+      </td>
+      <td width=\"56\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\" size=\"2\">";
+	   
+   if ($fromdollar[$i]==1)
+    echo "港元";
+	else
+	echo "日元";
+   echo "     <br>
+        </font> </td>
+		
+      <td width=\"162\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\">
+        <font color=\"#0066CC\"> 
+        $stock_taiwai[$i]
+        </font></td>
+      <td width=\"127\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\"> 
+        $stock_monkok[$i]
+        </font></td>
+      <td width=\"64\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\"><font face=\"新細明體\" size=\"2\">
+	  ";
+	  if ($place==1)
+	   echo "大圍";
+	    else
+		 echo "旺角";
+	  
+      echo "<font face=\"新細明體\" size=\"2\"> </font></font><font color=\"#0066CC\"> </font></td>
+      <td height=\"20\" bgcolor=\"#99CCFF\" width=\"52\"></td>
+    </tr>";
+	}
+	echo "</table>";
+ 
+   }
+   
+   ##################################
+   #入貨檢視(detail) 上半部
+   ####################################
+   function table_in_goods_view($bg1,$bg2)
+   {
+   ?>
+   <table width="609" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td width="52%" bgcolor="#CC9900" height="21"><font face="新細明體" size="3" color="#FFFFFF"><b>edit入貨表</b></font></td>
+      <td width="48%" height="21"><font face="新細明體" color="#0066CC" size="2">
+        212.000        港元 &lt;--&gt; 
+        1.000        日元 </font></td>
+   </tr>
+   </table>
+   <table border="0" width="737" height="20" cellspacing="0" cellpadding="0">
+    <tr> 
+      <th width="23" height="20" bgcolor="#FFdd66"> 
+        <div align="left"></div>
+      </th>
+      <th width="137" height="20" bgcolor="#FFdd66">
+        <div align="right"><font face="新細明體" color="#0066CC" size="2">REFERENCE_NO 
+          </font></div>
+      </th>
+      <th width="116" height="20" bgcolor="#FFdd66"> 
+        <div align="left"><font face="新細明體" color="#FFFFFF" size="2"> 
+          <? echo $this->row["ref_no"];?>
+          </font></div>
+      </th>
+      <td width="56" height="20" bgcolor="#FFdd66"> 
+        <div align="center"><font color="#0066CC" size="2">買入由</font></div>
+      </td>
+      <td width="162" height="20" bgcolor="#FFdd66"><font color="#0066CC"> 
+        <? echo $this->row["in_comp_name"];?>
+        </font></td>
+      <td width="127" height="20"></td>
+      <td height="20" width="64">&nbsp;</td>
+      <td height="20" width="52">&nbsp;</td>
+    </tr>
+    </table>
+   
+   <?
+   $this->table_in_goods_view2($bg1,$bg2);
+   }
+   ##################################
+   #入貨檢視(detail) 下半部
+   ####################################
+   function table_in_goods_view2($bg1,$bg2)
+	{
+		
+	echo "<table><tr>
+      <td width=\"23\" bgcolor=\"#FFCC66\" height=\"21\">&nbsp;</td>
+      <td bgcolor=\"#FFCC66\" width=\"137\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">貨物Part 
+        NO</font></td>
+      <td width=\"116\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">成本價格/每件 
+        $</font> </td>
+      <td width=\"56\" bgcolor=\"#FFCC66\" height=\"21\"> <font face=\"新細明體\" color=\"#0066CC\" size=\"2\">貨幣</font></td>
+      <td width=\"162\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">買入存量</font><font color=\"#0066CC\">大圍 
+        </font></td>
+      <td width=\"127\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">買入存量</font><font color=\"#0066CC\">旺角</font></td>
+      <td width=\"64\" bgcolor=\"#FFCC66\" height=\"21\"><font face=\"新細明體\" color=\"#0066CC\" size=\"2\">存貨地: 
+        </font></td>
+      <td height=\"21\" bgcolor=\"#99CCFF\" width=\"52\">&nbsp; </td>
+    </tr>";
+	for ($i=0;$i<$this->checktotal;$i++)
+	{
+	echo "
+        <tr> 
+      <td width=\"23\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"> 
+        <div align=\"center\"><font face=\"新細明體\" color=\"#000000\" size=\"2\"> 
+          $i</font></div>
+      </td>
+      <td bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\"  width=\"137\" height=\"20\"><font face=\"新細明體\" color=\"#FFFFFF\" size=\"2\">";
+       echo $this->row["goods_partno"];
+       
+       echo " </font></td>
+      <td width=\"116\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"> ";
+      echo $this->row["cost"];
+      echo "
+      </td>
+      <td width=\"56\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\" size=\"2\">";
+	   
+   if ($this->row["fromdollar"])
+    echo "港元";
+	else
+	echo "日元";
+   echo "     <br>
+        </font> </td>
+		
+      <td width=\"162\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\">
+        <font color=\"#0066CC\">";
+        echo $this->row["stock_taiwai"];
+        echo "
+        </font></td>
+      <td width=\"127\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\"> 
+       ";
+        echo $this->row["stock_monkok"];
+        echo "
+        </font></td>
+      <td width=\"64\" bgcolor=\""; if ($i%2==1) echo $bg1;else echo $bg2; echo "\" height=\"20\"><font color=\"#0066CC\"><font face=\"新細明體\" size=\"2\">
+	  ";
+	  if ($this->row["place"]==1)
+	   echo "大圍";
+	    else
+		 echo "旺角";
+	  
+      echo "<font face=\"新細明體\" size=\"2\"> </font></font><font color=\"#0066CC\"> </font></td>
+      <td height=\"20\" bgcolor=\"#99CCFF\" width=\"52\"></td>
+    </tr>";
+    $this->row=mysql_fetch_array ($this->result);
+	}
+	echo "</table>";
+ 
+   }
+   
+   function table_in_goods_edit()
+   {
+?>
+<form name=goodadform method="post" action="goodsadd.php3">
+  <? /*<p><font face="新細明體" color="#FFFFFF" size="2"> 貨物編號: </font>
+    <input type="text" name="goods_id" maxlength="13" class="login">
+    <font face="新細明體" color="#FFFFFF" size="2"> 貨物Part NO.:</font>
+    <input type="text" name="goods_partno" maxlength="20" class="login">
+  </p>*/
+  ?>
+  <table width="609" border="0" cellpadding="0" cellspacing="0">
+    <tr> 
+      <td width="52%" bgcolor="#CC9900" height="21"><font face="新細明體" size="3" color="#FFFFFF"><b>edit入貨表</b></font></td>
+      <td width="48%" height="21"><font face="新細明體" color="#0066CC" size="2"> 
+        <?
+		echo $row["hk"];
+		?>
+        港元 &lt;--&gt; 
+        <?
+		echo $row["jp"];
+		?>
+        日元 </font></td>
+    </tr>
+  </table>
+  <table border="0" width="737" height="137" cellspacing="0" cellpadding="0">
+    <tr> 
+      <th width="23" height="20" bgcolor="#FFdd66"> 
+        <div align="left"></div>
+      </th>
+      <th width="137" height="20" bgcolor="#FFdd66">
+        <div align="right"><font face="新細明體" color="#0066CC" size="2">REFERENCE_NO 
+          </font></div>
+      </th>
+      <th width="116" height="20" bgcolor="#FFdd66"> 
+        <div align="left"><font face="新細明體" color="#FFFFFF" size="2"> 
+          <input type="text" name="<? echo "ref_no";?>" maxlength="20" class="login" size="10">
+          </font></div>
+      </th>
+      <td width="56" height="20" bgcolor="#FFdd66"> 
+        <div align="center"><font color="#0066CC" size="2">買入由</font></div>
+      </td>
+      <td width="162" height="20" bgcolor="#FFdd66"><font color="#0066CC"> 
+        <select name="company_name" size="1">
+          <? for ($i=1;$i<=$result3;$i++)
+		{
+		echo "<option value=\"".$row2["company_name"]."\">".$row2["company_name"]."</option>";
+$row2=mysql_fetch_array ($result2);
+		}
+	?>
+        </select>
+        </font></td>
+      <td width="127" height="20"><font color="#0066CC"><a href="goods_company_edit.php3" target="_blank">EDIT</a></font></td>
+      <td height="20" width="64">&nbsp;</td>
+      <td height="20" width="52">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="23" bgcolor="#FFCC66" height="21">&nbsp;</td>
+      <td bgcolor="#FFCC66" width="137" height="21"><font face="新細明體" color="#0066CC" size="2">貨物Part 
+        NO</font></td>
+      <td width="116" bgcolor="#FFCC66" height="21"><font face="新細明體" color="#0066CC" size="2">成本價格/每件 
+        $</font> </td>
+      <td width="56" bgcolor="#FFCC66" height="21"> <font face="新細明體" color="#0066CC" size="2">貨幣</font></td>
+      <td width="162" bgcolor="#FFCC66" height="21"><font face="新細明體" color="#0066CC" size="2">買入存量</font><font color="#0066CC">大圍 
+        </font></td>
+      <td width="127" bgcolor="#FFCC66" height="21"><font face="新細明體" color="#0066CC" size="2">買入存量</font><font color="#0066CC">旺角</font></td>
+      <td width="64" bgcolor="#FFCC66" height="21"><font face="新細明體" color="#0066CC" size="2">存貨地: 
+        </font></td>
+      <td height="21" bgcolor="#99CCFF" width="52">&nbsp; </td>
+    </tr>
+    <? for($i=0;$i<30;$i++)
+    {
+    	?>
+    <tr> 
+      <td width="23" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"> 
+        <div align="center"><font face="新細明體" color="#000000" size="2"> 
+          <? echo $i+1;?>
+          </font></div>
+      </td>
+      <td bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" width="137" height="40"><font face="新細明體" color="#FFFFFF" size="2"> 
+        <input type="text" name="<? echo "goods_partno[$i]";?>" maxlength="20" class="login" size="20">
+        </font></td>
+      <td width="116" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"> 
+        <input type="text" name="<? echo "cost[$i]";?>" maxlength="9" class="login" size="10">
+      </td>
+      <td width="56" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"><font color="#0066CC" size="2">日元 
+        <input type="radio" name="<? echo "fromdollar[$i]";?>" value="0">
+        <br>
+        港元 
+        <input type="radio" name="<? echo "fromdollar[$i]";?>" value="1" checked>
+        </font> </td>
+      <td width="162" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"> 
+        <font color="#0066CC"> 
+        <input type="text" name="<? echo "stock_taiwai[$i]";?> maxlength="9" class="login" size="10">
+        </font></td>
+      <td width="127" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"><font color="#0066CC"> 
+        <input type="text" name="<? echo "stock_monkok[$i]";?> maxlength="9" class="login" size="10">
+        </font></td>
+      <td width="64" bgcolor="<?if($i%2==1) echo"$color1";else echo "$color2";?>" height="40"><font color="#0066CC"><font face="新細明體" size="2">大圍</font></font> 
+        <font color="#0066CC"> 
+        <input type="radio" name="<? echo "place[$i]";?>" value="2" checked class="login">
+        <br>
+        </font><font face="新細明體" color="#0066CC" size="2">旺角</font> <font color="#0066CC"> 
+        <input type="radio" name="<? echo "place[$i]";?>" value="1" class="login">
+        <font face="新細明體" size="2"> </font></font><font color="#0066CC"> </font></td>
+      <td height="40" bgcolor="#99CCFF" width="52"><a href="JavaScript:checkform();"><img src="submit.gif" border=0 align=bottom width="20" height="40"></a></td>
+    </tr>
+    <? } ?>
+    <tr> 
+      <td colspan="2"> 
+        <input type="reset" name="Submit2" value="Reset" class="login">
+      </td>
+      <td width="116">&nbsp; </td>
+      <td width="56">&nbsp;</td>
+      <td width="162">&nbsp;</td>
+      <td width="127">&nbsp;</td>
+      <td width="64">&nbsp;</td>
+      <td height="10" bgcolor="#99CCFF" width="52">&nbsp;</td>
+    </tr>
+  </table>
+  <p>&nbsp; </p>
+  <td colspan="3">&nbsp;</td>
+    <p></p>
+  </form>
+</body>
+</html>
+<?
+}//end function
+}//end class
+
+// create an object
+//$bar = new table("select * from in_goods",1,"");
+// external call
+//get_class($bar);
+// internal call
+//$bar->table_in_goods_datacheck_printing("#FFDD66","#EECC66");
+
+
+//$bar=new table("select * from in_goods order by in_goods_id desc ",0,"");
+//get_class($bar);
+//$bar->table_goods_show_printing($offset,$rowset);
+
+?> 

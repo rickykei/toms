@@ -1,0 +1,31 @@
+
+body { scrollbar-face-color: #6A84AE; scrollbar-shadow-color: #335997; scrollbar-highlight-color: #AAAAFF; scrollbar-3dlight-color: #335997; scrollbar-darkshadow-color: black; scrollbar-track-color: #335997; scrollbar-arrow-color: #FFFFCE }
+A:link    { color:white; }
+A:visited { color:white; }
+A:active  { color:white; }
+A:hover  { background:Red; color:white; }
+A { color:royalblue; text-decoration:none; line-height:14pt; }
+H1 {
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+H2 {
+	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+LI {
+	LINE-HEIGHT: 14pt
+}
+INPUT {
+	FONT-SIZE: 12px; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+SELECT {
+	FONT-SIZE: 12px; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+.login {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: 1px solid; COLOR: #FFFFFF; BORDER-BOTTOM: 1px solid; BACKGROUND-COLOR: #33cccc
+}
+SMALL {
+	FONT-SIZE: 9pt; LINE-HEIGHT: 14pt; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}
+P {
+	FONT-SIZE: 12pt; FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+}

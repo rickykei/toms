@@ -1,0 +1,28 @@
+20080517 /pdf/copdf.php CUSTOMERINVOICE label
+
+20080428 /pdf/copdf.php tel next line
+
+20080420 /pdf/pdf.php tel next line
+/ingoodsnameedit3 goods_id hidden  
+del /ingoodsnamedit_del
+
+20080202 /invoice_query.php PDF
+show_and_create_invoice.php3
+invoiceedit.php3
+invoiceshow.php3
+/pdf
+
+20070525 /invoiceap.php select * staff where status="y"
+20070524 /invoice_query edit password function added
+20070524 /invoice_show edit password function added
+20070517 /invoice_show delete pass changed
+20070403 /statistic/u2.php uddate 2007 year
+20070315 add index LINK for check_partno_admin.php
+20070314  renew check_partno.php3
+	  add check_partno_with_ingoods.php
+	  入貨顯示要多按href 去check_partno_with_ingoods.php才出現
+	 出貨record 只出今日對上一年
+
+20061104 invoice_no add to the wrong place so diff with 20061103 invoice_no3xxxx 19:13
+20050719 uploaded invoiceadd,invoiceap,show_and_create_invoice,invoiceedit,invoiceed,invoice_query
+	 for add check by invoice's cartype carno
