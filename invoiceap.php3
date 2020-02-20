@@ -3,28 +3,26 @@
 <title>(invoice) toms & trd shop</title>
 <meta http-equiv="Content-Type" content="text/html; charset=big5">
 <LINK REL=stylesheet HREF="english.css" TYPE="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
- 
+
+
+
 <script language="JavaScript">
 function checkform()
-{ 
- 
-	if($('#customer_name').val()==""){
-		alert("請輸入買貨人.");
-		document.form1.customer_name.focus();
-	}else if ($('#goods_partno\\[1\\]').val()=="") {
-		alert("請輸入partno.");
-		$('#goods_partno\\[1\\]').focus();
-	}else{
-		  document.form1.submit();
-    }
- 
+{
+	if(document.form1.sales_name.value == "")
+	{
+	alert ("請輸入貨品編號.");
+	document.form1.goods_id[1].focus();
+	}else
+	{
+        document.form1.submit();
+        }
+
 }
 
 function check_record1()
 {
-		 
-	if(document.form1.member_id.value == "" )
+	if(document.form1.member_id.value == "")
 	{
 	alert ("請輸入會員編號."+member_id);
 	document.form1.member_id.focus();
@@ -65,7 +63,7 @@ function MM_showHideLayers() { //v3.0
 </head>
 
 <body bgcolor="#0066cc" text="#000000">
-<form name="form1" id="form1" method="post" action="invoiceadd.php3" enctype="multipart/form-data">
+<form name="form1" method="post" action="invoiceadd.php3" enctype="multipart/form-data">
   <table width="79%" border="0">
     <tr> 
       <td><font face="新細明體" color="#FFFFFF" size="2">發票編號.:</font></td>
@@ -97,7 +95,7 @@ list($invoice_no)=$row;
     <tr> 
       <td><font face="新細明體" color="#FFFFFF" size="2">售貨人: </font></td>
       <td><font face="新細明體" color="#FFFFFF" size="2"> 
-                <select name="sales_name" id="sales_name" size="1">
+                <select name="sales_name" size="1">
           <? for ($i=1;$i<=$result3;$i++)
                 {
                 echo "<option value=\"".$row2["staff_name"]."\">".$row2["staff_name"]."</option>";
@@ -123,7 +121,7 @@ list($invoice_no)=$row;
       <tr> 
         <td><font face="新細明體" color="#FFFFFF" size="2">買貨人:</font></td>
         <td><font face="新細明體" color="#FFFFFF" size="2"> 
-          <input type="text" name="customer_name" id="customer_name" class="login">
+          <input type="text" name="customer_name" class="login">
           </font></td>
       </tr>
       <tr> 
@@ -160,7 +158,7 @@ list($invoice_no)=$row;
         <td width="75%"><font face="新細明體" color="#FFFFFF" size="2"> 
           <input type="text" name="member_id" class="login">
           </font>
-<a href="JavaScript:check_record1(1);"><img src="submit2.png" width="20" height="10" border="0"></a>
+<a href="JavaScript:check_record1();"><img src="submit2.png" width="20" height="10" border="0"></a>
 </td>
       </tr>
 	  <tr>
@@ -229,7 +227,7 @@ list($invoice_no)=$row;
 */
 ?>
       <td width="21%"> 
-        <input type="text" id="goods_partno[<?echo $input;?>]" name="goods_partno[<?echo $input;?>]" class="login" size="20" maxlength="20">
+        <input type="text" name="goods_partno[<?echo $input;?>]" class="login" size="20" maxlength="20">
       </td>
       <td width="22%"> 
         <input type="text" name="goods_detail[<?echo $input;?>]" class="login" size="20" maxlength="50">

@@ -42,7 +42,7 @@ $this->SetY(62);
 	 //$this->Cell($c4,$h,"",$border,0,'L',0);
 	 //$this->Cell($c5,$h,"",$border,0,'R',0);
 	 $this->Cell($c6+18,$h,"",$border,0,'R',0);
-	 $this->Cell($c7,$h,"INVOICE NO: ".$invoice_no."",$border,1,'R',0);
+	 $this->Cell($c7,$h,"INVOICE NO: T".$invoice_no."",$border,1,'R',0);
 
 $this->SetY(72);
    $this->Cell($c1,$h,"",$border,0,'L',0);
