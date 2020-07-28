@@ -19,7 +19,7 @@
 	
 	  $id=$row['id'];
 	  $ref_no=$row['ref_no'];
-	  $goods_id=$row['goods_id'];
+	  $goods_id=$row['goods_partno'];
 	 $company_name=$row['in_comp_name'];
 	  $cost=$row['cost'];
 	  $stock=$row['stock'];
@@ -107,7 +107,7 @@ function MM_showHideLayers() { //v3.0
         </select>
   </p>
   <p><font   color="#FFFFFF" size="2">Goods ID:</font>
-    <input type="text" name="goods_partno" maxlength="20" value='<? echo $goods_id; ?>' class="login">
+    <input type="text" name="goods_partno" maxlength="30" value='<? echo $goods_id; ?>' class="login">
   </p>
   
  

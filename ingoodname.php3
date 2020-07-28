@@ -144,8 +144,8 @@ function checkform()
     </tr>
     <tr> 
       <td width="18%">&nbsp;</td>
-      <td width="82%"><a href="JavaScript:checkform();"><img src="submit.gif" border=0 align=bottom></a> 
-        <input type="reset" name="Submit2" value="Reset" class="login">
+      <td width="82%"><input type="button" value="submit" onclick="checkform()"> 
+        <input type="reset" name="Submit2" value="Reset">
       </td>
     </tr>
   </table>

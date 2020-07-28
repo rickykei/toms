@@ -71,9 +71,12 @@ function checkform()
     <tr> 
       <td><font face="新細明體" color="#FFFFFF" size="2"> 存貨地: </font></td>
       <td><font face="新細明體" color="#FFFFFF" size="2"> 旺角</font>
-        <input type="radio" name="place" value="1" class="login" checked>
+        <input type="radio" name="place" value="1" class="login" >
         <font face="新細明體" color="#FFFFFF" size="2"> 大圍</font>
         <input type="radio" name="place" value="2" class="login">
+		<font face="新細明體" color="#FFFFFF" size="2"> 土瓜灣</font>
+        <input type="radio" name="place" value="3" class="login" checked>
+
       </td>
     </tr>
     <tr>

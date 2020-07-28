@@ -51,28 +51,28 @@ if ($update==2||$update==3)
    $no1=mysql_num_rows($result1);
    ////////////////////////////////
    //can find record in sumgoods DB
-   //§Y¦³¤J³f¦Wªº
-   //¦pªGÉNrecord ´N§ä¨ä¥X¤J°O¿ý
-   //¦nªG¦h­Ó¤@´Ngen all partno
+   //ï¿½Yï¿½ï¿½ï¿½Jï¿½fï¿½Wï¿½ï¿½
+   //ï¿½pï¿½Gï¿½Nrecord ï¿½Nï¿½ï¿½ï¿½Xï¿½Jï¿½Oï¿½ï¿½
+   //ï¿½nï¿½Gï¿½hï¿½Ó¤@ï¿½Ngen all partno
    ////////////////////////////////
    //
    //still find record from Invoice and goods db.200312082343 deal by Peggy
    //debug//echo "no1=".$no1;
    if ($no1==1)
    {
-   	//echo "¦¹partno¦b³f¦W¤¤¦³°O¿ý\t";
+   	//echo "ï¿½ï¿½partnoï¿½bï¿½fï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½\t";
    	$goods_partno=$row1["goods_partno"];
    }else 
    if ($no1==0)
    {
-   	//echo "<b><font color=\"FFFF00\">¦¹partno¦b³f¦W¤¤¨ÃÉN°O¿ý</font> ²{¦b·|¹Á¸Õ§ä¥X¨ä¥X³f¤J³f°O¿ý \t</b>";
+   	//echo "<b><font color=\"FFFF00\">ï¿½ï¿½partnoï¿½bï¿½fï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½Oï¿½ï¿½</font> ï¿½{ï¿½bï¿½|ï¿½ï¿½ï¿½Õ§ï¿½Xï¿½ï¿½Xï¿½fï¿½Jï¿½fï¿½Oï¿½ï¿½ \t</b>";
    }
    
    if ($no1==1||$no1==0)
    {
 
 ////// 
-//gen ¥X³f record query//
+//gen ï¿½Xï¿½f record query//
 /////
 
    $query2="select * from sumgoods,goods_invoice,invoice where goods_invoice.goods_partno=\"".$goods_partno."\" and sumgoods.goods_partno=goods_invoice.goods_partno and goods_invoice.invoice_no=invoice.invoice_no and sumgoods.admin_view=\"N\" order by invoice.invoice_no desc";
@@ -80,14 +80,14 @@ if ($update==2||$update==3)
    $row2=mysql_fetch_array ($result2);
    $no2=mysql_num_rows($result2);
    
-   //echo "§ä¨ì".$no2."±ø¥X³f°O¿ý";
+   //echo "ï¿½ï¿½ï¿?.$no2."ï¿½ï¿½ï¿½Xï¿½fï¿½Oï¿½ï¿½";
    
-   //gen ¤J³f record query//
+   //gen ï¿½Jï¿½f record query//
    $query3="select * from goods where goods_partno=\"".$goods_partno."\" order by date desc";
    $result3=mysql_query($query3);
    $row3=mysql_fetch_array ($result3);
    $no3=mysql_num_rows($result3);
-   //echo "§ä¨ì".$no3."±ø¤J³f°O¿ý\t";
+   //echo "ï¿½ï¿½ï¿?.$no3."ï¿½ï¿½ï¿½Jï¿½fï¿½Oï¿½ï¿½\t";
    
    // check sum of qty from goods_invoice for particular Partno
    $query5="select sum(qty) from goods_invoice where goods_partno=\"".$goods_partno."\"";
@@ -98,7 +98,7 @@ if ($update==2||$update==3)
    $result7=mysql_query($query7);
    $row7=mysql_fetch_array ($result7);
    $no7=mysql_num_rows($result7);
-   //echo "§ä¨ì".$no7."±ø¥X³f°O¿ýwithout sumgoodsjoin";
+   //echo "ï¿½ï¿½ï¿?.$no7."ï¿½ï¿½ï¿½Xï¿½fï¿½Oï¿½ï¿½without sumgoodsjoin";
    
    $result5=mysql_query($query5);
    $result6=mysql_query($query6);
@@ -131,7 +131,7 @@ if ($no1>1&&$update==2)
 //$query1="select * from sumgoods where goods_partno like '$goods_partno%' and model like '$model%' and  admin_view ='N' order by goods_partno ";
 //$result1=mysql_query($query1);
 //$row1=mysql_fetch_array($result1);
-echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Description</font></td></tr>";
+echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Description</font></td><td>MarketPrice</td><td>Stock</td></tr>";
 	do
 	{
 	echo "<tr><td>";
@@ -140,7 +140,35 @@ echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=blac
 	echo "</a>";
 	echo "</td><td><font color=#111111>";
 	echo $row1["model"];
-	echo "</font></td><td><font color=#111111>".$row1["goods_detail"]."</font></td></tr><p>";
+  echo "</font></td><td><font color=#111111>".$row1["goods_detail"]."</font></td>";
+  
+  // check sum of qty from goods_invoice for particular Partno
+  $query5="select sum(qty) from goods_invoice where goods_partno=\"".$row1["goods_partno"]."\"";
+  // check sum of stock from goods for particular Partno
+  $query6="select sum(stock) from goods where goods_partno=\"".$row1["goods_partno"]."\"";
+  // check don't remember function of blocked at 20031209 0017
+  $query7="select * from goods_invoice,invoice where goods_invoice.invoice_no=invoice.invoice_no and goods_partno=\"".$row1["goods_partno"]."\" order by goods_invoice.invoice_no  desc";
+  $result7=mysql_query($query7);
+  $row7=mysql_fetch_array ($result7);
+  $no7=mysql_num_rows($result7);
+  
+  $result5=mysql_query($query5);
+  $result6=mysql_query($query6);
+  
+  $row5=mysql_fetch_array ($result5);
+  $row6=mysql_fetch_array ($result6);
+  echo "<td ><font  color=black>".$row1["market_price"]." </font></td><td>";
+  $a=$row6["sum(stock)"]-$row5["sum(qty)"];
+	if ($a<0)
+	{
+ 		echo "<font face=·s²Ó©úÅé color=#FF0000 size=4>";
+	}
+	else
+	{
+		echo "<font face=·s²Ó©úÅé color=#000000 size=4>";
+  }
+  echo "  ".$a;
+  echo "</font></td></tr><p>";
   	}
  	while($row1=mysql_fetch_array($result1));
  	echo "</table>";
@@ -175,7 +203,7 @@ Model:<input type="text" name="model" maxlength="255">
 
 <?
 ////////////////////////////////////////////////
-//generate ¤J³f¦P¥X³f 20031208 1614
+//generate ï¿½Jï¿½fï¿½Pï¿½Xï¿½f 20031208 1614
 ///////////////////////////////////////////////
 if ($no1==1||$no2!=0||$no7!=0)
 {
@@ -200,14 +228,14 @@ echo "<p><font color=\"00DD00\"> REMARK=".$row1["remark"]."</font>";
 echo "</ststrong>";
 }
 ////////////////////////////////////////////////
-//generate ¤J³f¦P¥X³f 20031208 1614
+//generate ï¿½Jï¿½fï¿½Pï¿½Xï¿½f 20031208 1614
 ///////////////////////////////////////////////
 
 ?>
 
 <?
 ////////////////////////////////////////////////
-//generate ¥X³frecord 20031208 2354
+//generate ï¿½Xï¿½frecord 20031208 2354
 ///////////////////////////////////////////////
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="1">
@@ -215,7 +243,7 @@ echo "</ststrong>";
     <td >
     <table  width="100%" border="1" cellpadding="2" cellspacing="1" >
       <tr class=tablehead>
-        <td>¥X³f</td>
+           <td>¥X³f</td>
       </tr>
       <tr>
         <td width="10%">invoice_no</td>
@@ -299,7 +327,7 @@ echo "</ststrong>";
 <br>
       <?
 ////////////////////////////////////////////////
-//generate ¤J³frecord 20031208 2354
+//generate ï¿½Jï¿½frecord 20031208 2354
 ///////////////////////////////////////////////
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="1">
@@ -307,7 +335,7 @@ echo "</ststrong>";
     <td bgcolor="">
       <table width="100%" border="1" cellpadding="2" cellspacing="1" bgcolor=>
         <tr class=tablehead>
-          <td>¤J³f</td>
+          <td>?¥è²¨</td>
         </tr>
         <tr class=tableBGcolor>
           <td width="5%">id</td>
@@ -332,7 +360,7 @@ echo "</ststrong>";
   	echo "<td width=\"10%\">".$row3["cost"]."</td>";
   	echo "<td width=\"10%\">".$row3["stock"]."</td>";
   	echo "<td width=\"10%\">".$row3["stockout"]."</td>";
-  	if ($row3["place"]==1)
+  		if ($row3["place"]==1)
   		$temp="©ô¨¤";
   	else 	if ($row3["place"]==2)
   		$temp="¤j³ò";
@@ -347,7 +375,7 @@ echo "</ststrong>";
 }
 
 ////////////////////////////////////////////////
-//generate ¤J³frecord 20031208 2354
+//generate ï¿½Jï¿½frecord 20031208 2354
 ///////////////////////////////////////////////
 ?>
      </tr> </table>

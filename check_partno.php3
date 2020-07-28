@@ -128,7 +128,7 @@ if ($no1>1&&$update==2)
 //$query1="select * from sumgoods where goods_partno like '$goods_partno%' and model like '$model%' and  admin_view ='N' order by goods_partno ";
 //$result1=mysql_query($query1);
 //$row1=mysql_fetch_array($result1);
-echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Description</font></td></tr>";
+echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Description</font></td><td>MarketPrice</td><td>Stock</td></tr>";
 	do
 	{
 	echo "<tr><td>";
@@ -137,7 +137,38 @@ echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=blac
 	echo "</a>";
 	echo "</td><td><font color=#111111>";
 	echo $row1["model"];
-	echo "</font></td><td><font color=#111111>".$row1["goods_detail"]."</font></td></tr><p>";
+	echo "</font></td><td><font color=#111111>".$row1["goods_detail"]."</font></td>";
+	
+	
+	
+	
+  // check sum of qty from goods_invoice for particular Partno
+  $query5="select sum(qty) from goods_invoice where goods_partno=\"".$row1["goods_partno"]."\"";
+  // check sum of stock from goods for particular Partno
+  $query6="select sum(stock) from goods where goods_partno=\"".$row1["goods_partno"]."\"";
+  // check don't remember function of blocked at 20031209 0017
+  $query7="select * from goods_invoice,invoice where goods_invoice.invoice_no=invoice.invoice_no and goods_partno=\"".$row1["goods_partno"]."\" order by goods_invoice.invoice_no  desc";
+  $result7=mysql_query($query7);
+  $row7=mysql_fetch_array ($result7);
+  $no7=mysql_num_rows($result7);
+  
+  $result5=mysql_query($query5);
+  $result6=mysql_query($query6);
+  
+  $row5=mysql_fetch_array ($result5);
+  $row6=mysql_fetch_array ($result6);
+  echo "<td ><font  color=black>".$row1["market_price"]." </font></td><td>";
+  $a=$row6["sum(stock)"]-$row5["sum(qty)"];
+	if ($a<0)
+	{
+ 		echo "<font face=新細明體 color=#FF0000 size=4>";
+	}
+	else
+	{
+		echo "<font face=新細明體 color=#000000 size=4>";
+  }
+  echo "  ".$a;
+  echo "</font></td></tr><p>";
   	}
  	while($row1=mysql_fetch_array($result1));
 	mysql_free_result($result1);

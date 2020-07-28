@@ -95,6 +95,7 @@ $offset=0;
          echo '<td>date</td>',"\n";
          echo '<td>status</td>',"\n";
          echo '<td>edit</td>',"\n";
+		 echo '<td>delete</td>',"\n";
 echo '</tr>',"\n";
       $chodd=0;
       while ($row=mysql_fetch_row($rows))
@@ -119,6 +120,7 @@ echo '</tr>',"\n";
             echo '<input type="hidden" name="ed" value=',$id,' class="login">',"\n";
             echo '<input type="submit" name="submit" value="EDIT" class="login">',"\n";
             echo '</form></td>',"\n";
+			echo '<td ',$bgcolor,'><a href="javascript:check_del(',$id,')">DELETE</a></td>',"\n";
             echo '</tr>',"\n";
             $chodd=$chodd+1;
            }

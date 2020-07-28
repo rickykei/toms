@@ -4,6 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=big5" />
 <link rel="stylesheet" href="../include/instock_style.css" type="text/css">
 <title>In Stock List</title>
+<SCRIPT LANGUAGE="JavaScript">
+function check_del(aa)
+{
+var temp_pass = prompt('如你真的要刪除此項,請輸入密碼!!');
+var pass="123";
+
+ if (temp_pass==pass)
+ {
+ alert(aa);
+ window.location="only_goodsshow_del.php3?id="+aa;
+ }
+ else
+ {
+ alert('error');
+ }
+}
+
+</script>
 <style type="text/css">
 <!--
 body {
@@ -133,6 +151,7 @@ echo $Pager->numPages;
 ?>
 <table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#000000">
   <tr bgcolor="#006666">
+  <td width="22" height="23" bgcolor="#006666"><div align="center"><strong> id</strong></div></td>
     <td width="22" height="23" bgcolor="#006666"><div align="center"><strong> refno</strong></div></td>
     <td width="66" bgcolor="#006666"><div align="center"><strong>date </strong></div></td>
 	<td width="66" bgcolor="#006666"><div align="center"><strong>supplier </strong></div></td>
@@ -142,14 +161,16 @@ echo $Pager->numPages;
 
 
 	<td width="5%" bgcolor="#006666"><div align="center"><strong>EDIT</strong></div></td>
+	<td width="5%" bgcolor="#006666"><div align="center"><strong>DELETE</strong></div></td>
   </tr>
   <?php 
 	for ($i=0;$i<count($result);$i++)
 	{ 
 	$row=$result[$i];
 	
-   ?><tr valign="middle" align="center" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'"><td class="style7">    <?=$row['ref_no']?>
-  </td>
+   ?><tr valign="middle" align="center" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
+   <td class="style7">    <?=$row['id']?> </td>
+   <td class="style7">    <?=$row['ref_no']?> </td>
   <td class="style7">    <?=$row['date']?>  </td>
   <td class="style7">    <?=$row['in_comp_name']?>  </td>
   <td class="style7">    <?=$row['goods_partno']?>  </td>
@@ -157,6 +178,7 @@ echo $Pager->numPages;
   <td class="style7"><div align="center"><?if($row['place']==1)echo "旺角"; if($row['place']==2)echo "大圍"; if($row['place']==3)echo "土瓜灣"; ?></strong></div></td>
  
   <td><a href="goodsedit.php?ed=<?=$row['id'];?>" class="b">EDIT</a></td>
+  <td><a href="javascript:check_del(',$id,')">DELETE</a></td>
   </tr>
 <?
 		 }

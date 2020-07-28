@@ -16,7 +16,7 @@
     <td height="34" colspan="3"> <div align="center"><img src="tom&trd.gif" width="412" height="54"></div></td>
   </tr>
   <tr> 
-    <td width="33%" height="21" bgcolor="#CC9900"> <div align="center"><a href="goodsap.php3?add=0">入貨表</a></div></td>
+    <td width="33%" height="21" bgcolor="#CC9900"> <div align="center"><a href="goodsap.php3?add=0">入貨表</a>/<a href="/instock/instock_by_excel.php">入貨表excel</a></div></td>
     <td height="21" bgcolor="#006666"> <div align="center"><a href="ingoodname.php3?add=0" target="_blank">入貨名</a></div></td>
     <td height="21" bgcolor="#0066cc"> <div align="center"><a href="invoiceap.php3" target="_blank">出貨單</a></div></td>
   </tr>
