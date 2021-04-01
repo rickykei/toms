@@ -13,7 +13,7 @@ var pass="123";
  if (temp_pass==pass)
  {
  alert(aa);
- window.location="only_goodsshow_del.php3?id="+aa;
+ window.location="only_goodsshow_del.php?id="+aa;
  }
  else
  {
@@ -178,7 +178,7 @@ echo $Pager->numPages;
   <td class="style7"><div align="center"><?if($row['place']==1)echo "©ô¨¤"; if($row['place']==2)echo "¤j³ò"; if($row['place']==3)echo "¤g¥ÊÆW"; ?></strong></div></td>
  
   <td><a href="goodsedit.php?ed=<?=$row['id'];?>" class="b">EDIT</a></td>
-  <td><a href="javascript:check_del(',$id,')">DELETE</a></td>
+  <td><a href="javascript:check_del(<?=$row['id'];?>)">DELETE</a></td>
   </tr>
 <?
 		 }

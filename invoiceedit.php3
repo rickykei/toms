@@ -16,7 +16,11 @@ $query = "select * from invoice , goods_invoice where  invoice.invoice_no = good
  
    if (mysql_num_rows($rows2)==0)
    {
-   echo "Too Bad!1";
+  // echo "Too Bad!1";
+   $query="select * from invoice where invoice_no =$ed";
+   $rows=mysql_query($query);
+    $row=mysql_fetch_row($rows);
+      list($invoice_no, $invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;  
    }else{
    
    $query="select * from goods_invoice left join goods on goods_invoice.goods_id=goods.goods_id left join invoice on goods_invoice.invoice_no=invoice.invoice_no where goods_invoice.invoice_no=$ed";
@@ -49,7 +53,11 @@ $query = "select * from invoice , goods_invoice where  invoice.invoice_no = good
       //$y=substr($invoice_date,0,4);
       //$invoice_date=$d."/".$m."/".$y;
 
-      if (!empty($member_id))     //check member
+ 
+
+   }
+   }
+        if (!empty($member_id))     //check member
       {
          $mem="checked";
          $nomem="";
@@ -63,9 +71,6 @@ $query = "select * from invoice , goods_invoice where  invoice.invoice_no = good
          $memshow="hidden";
          $nomemshow="visible";
       }
-
-   }
-   }
 ?>
 
 

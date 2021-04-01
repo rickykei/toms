@@ -13,7 +13,7 @@ body {
 </script><?
    include("../config.php3");
 
-   $query="select * from goods where id=$ed";
+   $query="select * from goods where id=$id";
 
    $rows2=mysql_query($query);
    if (!$rows2)
@@ -28,10 +28,10 @@ body {
    	
 		//delete db 1 record by 1
 		if ($goods_partno!="")    {
-		  $query3="delete from goods where id =$ed";
+		  $query3="delete from goods where id =$id";
 		  if (mysql_query($query3))
 		   {
-				echo "<p>instock deleted".$ed;
+				echo "<p>instock deleted".$id;
 		           $query2="update sumgoods set allstock=allstock-".$stock." where goods_partno='$goods_partno'";
 		    
 				if (mysql_query($query2)){
