@@ -96,7 +96,7 @@ $title='出貨單';
 $pdf->Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$co_no,$customer_name,$co_date,$customer_detail,$customer_tel);
 $pdf->Output("./co_pdf_store/".$co_no.'.pdf');
 
-
+include_once("../pdf3/pdf_co_v2.php");
 
 	$copath="./co_store/";
         $cofile="co-".$co_no.".rtf";
@@ -196,7 +196,7 @@ fclose($fp);
 	
 	echo "\n資料順利輸入!<br><a href=\"javascript:printout();\">列印</a>";
 		echo "<p><a target='_blank' href='./co_pdf_store/".$co_no.".pdf' > PDF 列印 </a>";
-	
+	echo "<p><a target='_blank' href='./pdf/".$co_no.".pdf' > EMAIL PDF </a>";
 	}
    else if ($cherr==3)
       echo "\ncan not insert co";

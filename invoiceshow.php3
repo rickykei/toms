@@ -102,6 +102,7 @@ $offset=0;
              echo '<td>­×§ï </td>',"\n";
              echo '<td>RTF¦C¦L </td>',"\n";
              echo '<td>PDF¦C¦L </td>',"\n";
+			 echo '<td>EMAIL PDF </td>',"\n";
          echo '</tr>',"\n";
       $chodd=0;
       while ($row=mysql_fetch_row($rows))
@@ -201,6 +202,12 @@ while ($query_totalamount2=mysql_fetch_row($query_totalamount))
 		     
                        echo '</form></td>',"\n";
                               echo '<td ',$bgcolor,'><form name="form3" method="post" action="./invoice_pdf/',$invoice_no,'.pdf">',"\n";
+                       echo '<input type="hidden" name="invoice_no" value=',$invoice_no,' class="login">',"\n";
+                       echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
+		     
+                       echo '</form></td>',"\n";
+					   
+					      echo '<td ',$bgcolor,'><form name="form3" method="post" action="./invoice/pdf/',$invoice_no,'.pdf">',"\n";
                        echo '<input type="hidden" name="invoice_no" value=',$invoice_no,' class="login">',"\n";
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
 		     

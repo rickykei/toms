@@ -103,7 +103,7 @@ $pdf->Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invoice
 $pdf->Output("./invoice_pdf/".$invoice_no.'.pdf');
 
 
-
+ include_once("./pdf3/pdf_v2.php");
 
 
 
@@ -205,6 +205,7 @@ fclose($fp);
 	
 	echo "\n資料順利輸入!<br><a href=\"javascript:printout();\">RTF 列印</a>";
 	echo "<p><a target='_blank' href='./invoice_pdf/".$invoice_no.".pdf' > PDF 列印 </a>";
+	echo "<p><a target='_blank' href='./invoice/pdf/".$invoice_no.".pdf' > Email PDF </a>";
 	
 	
 	}

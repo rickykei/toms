@@ -88,11 +88,12 @@ $bgcolor="bgcolor=AAAAAA";
              echo '<td ',$bgcolor,' >售貨人 </td>',"\n";
              echo '<td ',$bgcolor,' >買貨人 </td>',"\n";
              echo '<td ',$bgcolor,' >電話 </td>',"\n";
-             echo '<td ',$bgcolor,' >其他資料 </td>',"\n";
+             echo '<td ',$bgcolor,' >車牌號碼 </td>',"\n";
              echo '<td ',$bgcolor,' >會員編號 </td>',"\n";
              echo '<td ',$bgcolor,' >修改 </td>',"\n";
        echo '<td ',$bgcolor,'>RTF列印 </td>',"\n";
              echo '<td ',$bgcolor,'>PDF列印 </td>',"\n";
+			 echo '<td ',$bgcolor,'>EMAIL PDF</td>',"\n";
          echo '</tr>',"\n";
       $chodd=0;
       while ($row=mysql_fetch_row($rows))
@@ -125,7 +126,11 @@ while ($query_totalamount2=mysql_fetch_row($query_totalamount))
         //20091201 rounding co >2417
 				if ($co_no>2417){
 				// round 20091201
-				$amount=$qty*($marketprice-($marketprice*($discountrate/100)));
+				//$amount=round($qty*($marketprice-($marketprice*($discountrate/100))));
+				
+				// round 20101215
+				$amount=round($qty*round($marketprice-($marketprice*($discountrate/100))));
+
 				}else{
       $amount=$qty*($marketprice-($marketprice*($discountrate/100)));
       }
@@ -169,6 +174,10 @@ while ($query_totalamount2=mysql_fetch_row($query_totalamount))
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
                        echo '</form></td>',"\n";
                        echo '<td ',$bgcolor,'><form name="form3" method="post" action="./co_pdf_store/',$co_no,'.pdf">',"\n";
+                       echo '<input type="hidden" name="co_no" value=',$co_no,' class="login">',"\n";
+                       echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
+					    echo '</form></td>',"\n";
+					   echo '<td ',$bgcolor,'><form name="form3" method="post" action="/pdf/',$co_no,'.pdf">',"\n";
                        echo '<input type="hidden" name="co_no" value=',$co_no,' class="login">',"\n";
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
 		     echo '</form></td>',"\n";

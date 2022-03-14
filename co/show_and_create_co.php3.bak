@@ -21,7 +21,7 @@
 	echo "</tr>";
 	echo "<tr> ";
 	echo "<td width=\"46%\">電話: ".$customer_tel."<br>";
-	echo "其他資料:".$customer_detail." <br>";
+	echo "車牌號碼:".$customer_detail." <br>";
 	echo "</td>";
 	echo "<td width=\"54%\">會員編號:.$member_id.</td></tr><tr>";
 	if ($today>$customer_exp_date)
@@ -51,12 +51,17 @@
 	echo "<td>".$qty[$i]."</td>";
 	echo "<td>".$market_price[$i]."</td>";
 	echo "<td>".$discountrate[$i]."</td>";
+	
 		if ($co_no>2417){
 	// round 20091201
 		$amount[$i]=round($qty[$i]*($market_price[$i]-($market_price[$i]*($discountrate[$i]/100))));
+	// round 20101215
+		$amount[$i]=round($qty[$i]*round($market_price[$i]-($market_price[$i]*($discountrate[$i]/100))));
+	
 	 }else{
 		$amount[$i]=$qty[$i]*($market_price[$i]-($market_price[$i]*($discountrate[$i]/100)));
 		}
+		
 	$totalamount=$totalamount+$amount[$i];
 	$amount[$i]=number_format($amount[$i],2);
 	echo "<td>".$amount[$i]."</td>";
@@ -88,10 +93,10 @@ $pdf->SetAutoPageBreak(true,1);
 $pdf->SetTopMargin(0);
 $pdf->AddBig5Font();
 $title='出貨單';
-$pdf->Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$co_no,$customer_name,$co_date,$customer_car_no,$customer_tel);
+$pdf->Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$co_no,$customer_name,$co_date,$customer_detail,$customer_tel);
 $pdf->Output("./co_pdf_store/".$co_no.'.pdf');
 
-
+include_once("../pdf3/pdf_co_v2.php");
 
 	$copath="./co_store/";
         $cofile="co-".$co_no.".rtf";
@@ -191,7 +196,7 @@ fclose($fp);
 	
 	echo "\n資料順利輸入!<br><a href=\"javascript:printout();\">列印</a>";
 		echo "<p><a target='_blank' href='./co_pdf_store/".$co_no.".pdf' > PDF 列印 </a>";
-	
+	echo "<p><a target='_blank' href='./pdf/".$co_no.".pdf' > PDF 列印 </a>";
 	}
    else if ($cherr==3)
       echo "\ncan not insert co";

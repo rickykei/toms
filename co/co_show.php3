@@ -93,6 +93,7 @@ $bgcolor="bgcolor=AAAAAA";
              echo '<td ',$bgcolor,' >­×§ï </td>',"\n";
        echo '<td ',$bgcolor,'>RTF¦C¦L </td>',"\n";
              echo '<td ',$bgcolor,'>PDF¦C¦L </td>',"\n";
+			 echo '<td ',$bgcolor,'>EMAIL PDF</td>',"\n";
          echo '</tr>',"\n";
       $chodd=0;
       while ($row=mysql_fetch_row($rows))
@@ -173,6 +174,10 @@ while ($query_totalamount2=mysql_fetch_row($query_totalamount))
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
                        echo '</form></td>',"\n";
                        echo '<td ',$bgcolor,'><form name="form3" method="post" action="./co_pdf_store/',$co_no,'.pdf">',"\n";
+                       echo '<input type="hidden" name="co_no" value=',$co_no,' class="login">',"\n";
+                       echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
+					    echo '</form></td>',"\n";
+					   echo '<td ',$bgcolor,'><form name="form3" method="post" action="./pdf/',$co_no,'.pdf">',"\n";
                        echo '<input type="hidden" name="co_no" value=',$co_no,' class="login">',"\n";
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
 		     echo '</form></td>',"\n";
