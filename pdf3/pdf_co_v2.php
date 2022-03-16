@@ -80,8 +80,8 @@ $this->SetY(42);
 	 $this->Cell(80,$h,mb_convert_encoding($customer_name, "UTF-8", "BIG5"),"B",0,'L',0);
 	 $this->Cell(35,$h,"CAR/ORDER NO:","TBL",0,'R',0);
 	 $this->Cell(25,$h,$customer_car_no."(".$mile."km)","TBR",0,'L',0);
-	 $this->Cell(30,$h,"C/O:",$border,0,'R',0);
-	 $this->Cell($c7,$h,"T".$co_no."",$border,1,'L',0);
+	 $this->Cell(30,$h,"Customer Order:",$border,0,'R',0);
+	 $this->Cell($c7,$h,"".$co_no."",$border,1,'L',0);
 
  
 
