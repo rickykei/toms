@@ -13,7 +13,7 @@
 <body bgcolor="#31CFCE" text="#000000">
 <table width="70%" border="0" height="91" align="center">
   <tr> 
-    <td height="34" colspan="3"> <div align="center"><img src="tom&trd.gif" width="412" height="54"></div></td>
+    <td height="34" colspan="3"> <div align="center"><img src="tomsnewlogo.png" width="412" height="54"></div></td>
   </tr>
   <tr> 
     <td width="33%" height="21" bgcolor="#CC9900"> <div align="center"><a href="goodsap.php3?add=0">入貨表</a>/<a href="/instock/instock_by_excel.php">入貨表excel</a></div></td>

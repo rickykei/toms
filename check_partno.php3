@@ -5,7 +5,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=big5">
 <STYLE TYPE="text/css">
 
+ /* unvisited link */
+a:link {
+  color: red;
+}
 
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}   
 </STYLE>
 
 
@@ -42,8 +60,8 @@ include_once("config.php3");
 if ($update==2||$update==3)
 {
    #$query1="select * from sumgoods where goods_partno=\"".$goods_partno."\" where admin_view='N'";
-   if ($update==2&&$model!="")
-   $query1="select * from sumgoods where goods_partno like \"$goods_partno%\" and model like '$model%' and admin_view=\"N\" ";
+   if ($update==2&&($model!="" || $brand!=""))
+   $query1="select * from sumgoods where goods_partno like \"$goods_partno%\" and brand like '%$brand%' and model like '%$model%' and admin_view=\"N\" ";
    else
    $query1="select * from sumgoods where goods_partno like \"$goods_partno%\" and admin_view=\"N\" order by goods_partno";
    if ($update==3)
@@ -128,16 +146,21 @@ if ($no1>1&&$update==2)
 //$query1="select * from sumgoods where goods_partno like '$goods_partno%' and model like '$model%' and  admin_view ='N' order by goods_partno ";
 //$result1=mysql_query($query1);
 //$row1=mysql_fetch_array($result1);
-echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Description</font></td><td>MarketPrice</td><td>Stock</td></tr>";
+echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=black> Partno</font></td><td><font color=black>Model</font></td><td><font color=black>Brand</font></td><td><font color=black>Description</font></td><td>MarketPrice</td><td>Stock</td></tr>";
 	do
 	{
 	echo "<tr><td>";
 	echo "<a href=check_partno.php3?update=3&goods_partno=".urlencode($row1["goods_partno"]).">";
 	echo $row1["goods_partno"];
 	echo "</a>";
-	echo "</td><td><font color=#111111>";
+	echo "</td>";
+	echo "<td><font color=#111111>";
 	echo $row1["model"];
-	echo "</font></td><td><font color=#111111>".$row1["goods_detail"]."</font></td>";
+	echo "</font></td>";
+	echo "<td><font color=#111111>";
+	echo $row1["brand"];
+	echo "</font></td>";
+	echo "<td><font color=#111111>".$row1["goods_detail"]."</font></td>";
 	
 	
 	
@@ -191,6 +214,7 @@ echo "<table bgcolor=#EEEEEE border=1><tr bgcolor='Abcdef'><td ><font color=blac
 <form name=hello method="post" action="check_partno.php3">
 PartNo:<input type="text" name="goods_partno" maxlength="20">
 Model:<input type="text" name="model" maxlength="255">
+Brand:<input type="text" name="brand" maxlength="255">
 <input type="hidden" name="update" value=2>
 <input type="submit" name="submit">
 </form>
@@ -223,9 +247,11 @@ if ($no1==1||$no2!=0||$no7!=0)
 	}
 	
 echo "  存貨 = ".$a;
-echo "<p>PARTNO=".$row1["goods_partno"]."貨品資料=".$row1["goods_detail"]."";
-echo "\t 市價=".$row1["market_price"]." Model = ".$row1["model"];
-echo "<p><font color=\"00DD00\"> REMARK=".$row1["remark"]."</font>";
+echo "<p>PARTNO = ".$row1["goods_partno"]." 貨品資料 = ".$row1["goods_detail"]."";
+echo " 市價 = ".$row1["market_price"];
+echo "<p> Model = ".$row1["model"];
+echo "<p> Brand = ".$row1["brand"];
+echo "<p><font color=\"00DD00\"> REMARK = ".$row1["remark"]."</font>";
 echo "</ststrong>";
 }
 ////////////////////////////////////////////////
@@ -253,7 +279,7 @@ echo "</ststrong>";
         <td width="10%">goods_partno</td>
         <td width="3%">qty</td>
         <td width="5%">discountrate</td>
-        <td width="10%">marketprice</td>
+        <td width="10%">marketPrice</td><td width="10%">netPrice</td>
         <td width="20%">date</td>
       </tr>
       <? 
@@ -279,13 +305,14 @@ echo "</ststrong>";
   
 	echo "<tr>";
 	//<td width=\"10%\">".$row2["id"]."</td>";
-  	echo "<td width=\"10%\">".$row2["invoice_no"]."</td>";
+  	echo "<td width=\"10%\"><a target=\"invoice\" href=\"/invoice_pdf/".$row2["invoice_no"].".pdf\">".$row2["invoice_no"]."</a></td>";
   	echo "<td width=\"10%\">".$row2["member_id"]."</td>";
   	echo "<td width=\"30%\">".$row2["customer_name"]."</td>";
   	echo "<td width=\"10%\">".$row2["goods_partno"]."</td>";
   	echo "<td width=\"3%\">".$row2["qty"]."</td>";
   	echo "<td width=\"5%\">".$row2["discountrate"]."</td>";
   	echo "<td width=\"10%\">".$row2["marketprice"]."</td>";
+	echo "<td width=\"10%\">".($row2["marketprice"]*(100-$row2["discountrate"])/100)."</td>";																						  
   	//echo "<td width=\"3%\">".$row2["status"]."</td>";
   	echo "<td width=\"20%\">".$row2["invoice_date"]."</td>";
   	$row2=mysql_fetch_array ($result2);

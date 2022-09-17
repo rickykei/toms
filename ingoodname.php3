@@ -44,12 +44,12 @@ if ($add==1) //after submit
  
     $market_price=$market_price*$row2["hk"];
        
-    $query="insert into sumgoods (goods_id,goods_partno,goods_detail,market_price,allstock,status,admin_view,remark,model) values ('$goods_id','$goods_partno','$goods_detail',$market_price,0,'Y','N','$remark','$model')";
+    $query="insert into sumgoods (goods_id,goods_partno,goods_detail,market_price,allstock,status,admin_view,remark,model,brand) values ('$goods_id','$goods_partno','$goods_detail',$market_price,0,'Y','N','$remark','$model','$brand')";
     }
     
     if ($fromdollar==1)
     {
-    $query="insert into sumgoods (goods_id,goods_partno,goods_detail,market_price,allstock,status,admin_view,remark,model) values ('$goods_id','$goods_partno','$goods_detail',$market_price,0,'Y','N','$remark','$model')";
+    $query="insert into sumgoods (goods_id,goods_partno,goods_detail,market_price,allstock,status,admin_view,remark,model,brand) values ('$goods_id','$goods_partno','$goods_detail',$market_price,0,'Y','N','$remark','$model','$brand')";
     }
       echo "己經存入";
       
@@ -123,9 +123,15 @@ function checkform()
       </td>
     </tr>
     <tr> 
-      <td width="18%"><font color="#FFFFFF" >MODEL:</font></td>
+      <td width="18%"><font color="#FFFFFF" >Model:</font></td>
       <td width="82%"> 
-        <input type="text" name="model" size="30" maxlength="255" class="login">
+        <input type="text" name="model"  maxlength="255" class="login">
+      </td>
+    </tr>
+	 <tr> 
+      <td width="18%"><font color="#FFFFFF" >Brand:</font></td>
+      <td width="82%"> 
+        <input type="text" name="brand" maxlength="255" class="login">
       </td>
     </tr>
     <tr> 

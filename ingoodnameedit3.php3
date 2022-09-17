@@ -10,11 +10,11 @@ if ($fromdollar==0)
     $result2=mysql_query($query2);
     $row2=mysql_fetch_array($result2);
    $market_price=$market_price*$row2["hk"];
-$query="update sumgoods set model='$model', goods_id='$goods_id',goods_partno='$goods_partno',goods_detail='$goods_detail',market_price=$market_price ,remark='$remark' where id='$id'";
+$query="update sumgoods set brand='$brand' ,model='$model', goods_id='$goods_id',goods_partno='$goods_partno',goods_detail='$goods_detail',market_price=$market_price ,remark='$remark' where id='$id'";
    }
    if ($fromdollar==1)
    {
- $query="update sumgoods set model='$model',goods_id='$goods_id',goods_partno='$goods_partno',goods_detail='$goods_detail',market_price=$market_price ,remark='$remark'where id='$id'";
+ $query="update sumgoods set brand='$brand', model='$model',goods_id='$goods_id',goods_partno='$goods_partno',goods_detail='$goods_detail',market_price=$market_price ,remark='$remark'where id='$id'";
    }
    if (mysql_query($query))
    $string="資料已經更生";
@@ -154,10 +154,18 @@ else
         <td width="111"> 
         <div align="right">MODEL:</div>        </td>
         <td width="210"> 
-        <input type="text" name="model" class="login" value="<? $model=stripslashes($row["model"]); echo $model;?>" size="25" maxlength="255">        </td>
+        <input type="text" name="model" class="login" value="<? $model=stripslashes($row["model"]); echo $model;?>"  maxlength="255">        </td>
         <td width="117">&nbsp;</td>
         <td width="285">&nbsp;</td>
       </tr>
+	     <tr bgcolor="#999999"> 
+        <td width="111"> 
+		<div align="right">BRAND:</div>        </td>
+      <td width="210"> 
+        <input type="text" name="brand" size="30" value="<? $model=stripslashes($row["brand"]); echo $model;?>" maxlength="255" class="login">
+       <td width="117">&nbsp;</td>
+        <td width="285">&nbsp;</td>
+    </tr>
       <tr bgcolor="#999999"> 
         <td width="111">&nbsp;</td>
         <td width="210"><font color="#FFFFFF" size="2">日元 
