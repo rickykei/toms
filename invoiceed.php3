@@ -1,19 +1,9 @@
 <?
    include("config.php3");
-
+ 
    $nitem=30+1; //the no. of the item + 1.
 
-//change at 12-6-01
-   //$d=substr($invoice_date,0,2);    //set date format
-   //$m=substr($invoice_date,3,2);
-   //$y=substr($invoice_date,6,4);
-   //$invoice_date=$y."-".$m."-".$d;
-
-
-   
-
-
-
+  
    for ($i=1;$i<$nitem;$i++)  //make the null field to go to lastest!
    {
     
@@ -24,10 +14,7 @@
          if (empty($goods_partno[$j]))
          {
         
-//            $temp=$goods_id[$j];
-//            $goods_id[$j]=$goods_id[$j+1];
-//            $goods_id[$j+1]=$temp;
-
+ 
             $temp1=$qty[$j];
             $qty[$j]=$qty[$j+1];
             $qty[$j+1]=$temp1;
@@ -66,38 +53,7 @@
       }
    }
 
-/*for ($i=1;$i<$nitem;$i++)
-   {
-     
-	$cha="";
-      for ($j=0;$j<13;$j++)
-      {
-         if (empty($goods_id[$i]))  //check goods_id if empty
-            break;
-
-         $ch=substr($goods_id[$i],$j,1);
-
-         if ($ch==" ")  //change the space to "-"
-            $ch="-";
-
-         $cha=$cha.$ch;
-      }
-      $goods_id[$i]=$cha;
-
-
-      if (empty($market_price[$i]))  //match the ext_price and market_price
-      {
-         $extps=mysql_query("select market_price from goods where goods_partno=$goods_partno");
-         if (!empty($extps))
-         {
-            $extp=mysql_fetch_row($extps);
-            echo mysql_error();
-            list($ext)=$extp;
-            $market_price[$i]=$ext;
-         }
-      }
-   }
-*/
+ 
 $gitem=0; //check how many input goods item.
    for ($i=1;$i<$nitem+1;$i++)
    {
@@ -107,32 +63,7 @@ $gitem=0; //check how many input goods item.
          break;
       }
    }
-   //delete at 29-10-01 cos no check market detail copy new in invoiceadd.php3
-   //$chext=0;
- //  for ($i=1;$i<$gitem+1;$i++)
-  // {
- //    if (empty($market_price[$i]))
-  //    {
-  //       $chpr=mysql_query("select market_price from sumgoods where goods_id='$goods_id[$i]'");
-  //       if (!empty($chpr))
-  //       {
-  //          $chprs=mysql_fetch_row($chpr);
-  //          list($lchpr)=$chprs;
-  //          $market_price[$i]=$lchpr;
-  //       }
-  //       else
-  //       {
-  //          $chext=1;
-  //       }
-  //    }
-  // }
-  //   if ($chext==1)
-  // {
-  //   echo "沒有貨物編號, 請從新輸入! ";
-  //   exit();
-  // }
-   // find the marketprice detail from sumgoods to the goods_id
-   //added at 291001
+ 
 
    for ($i=1;$i<=$gitem;$i++)
    {
@@ -141,6 +72,8 @@ $gitem=0; //check how many input goods item.
          $chprs=mysql_fetch_row($chpr);
          list($detail,$lchpr)=$chprs;
         
+		
+		
          if ($market_price[$i]=="" )
          {
         
@@ -148,10 +81,12 @@ $gitem=0; //check how many input goods item.
          }
          if ($goods_detail[$i]=="")
          {
-         $goods_detail[$i]=$detail;
-         }
-
-
+			$goods_detail[$i]=$detail;
+         } 
+		 
+		 $goods_detail[$i]=stripslashes($goods_detail[$i]);
+			  $goods_detail[$i]=addslashes($goods_detail[$i]);
+	 
    }
    
    //added at 291001
@@ -193,32 +128,7 @@ $gitem=0; //check how many input goods item.
      $cherr=3;
     echo mysql_error();
    }
-   
-//
-//   else
-//   {
-//      $query5="select goods_id,un from goods_invoice where invoice_no=$invoice_no"; //add the goods before deleted
-//      $gunss=mysql_query($query5);
-//      if ($guns)
-//      {
-//         $cherr=5;
-//         echo mysql_error();
-//      }
-//
-//      else
-//      {
-//         while($guns=mysql_fetch_row($gunss))
-//         {
-//            list($gid,$gun)=$guns;
-//            $query6="update goods set stock=stock+$gun where goods_id=$gid";
-//            if (!mysql_query($query6))
-//            {
-//               $cherr=6;
-//               echo mysql_error();
-//            }
- //        }
-//
-//      }
+    
 
 
 $query4="delete from goods_invoice where invoice_no=$invoice_no";  //delete old record
@@ -228,20 +138,15 @@ $query4="delete from goods_invoice where invoice_no=$invoice_no";  //delete old 
 
    for ($i=1;$i<$gitem+1;$i++)
    {
-      $query1="insert into goods_invoice (invoice_no,goods_id,goods_partno,qty,discountrate,marketprice,status) values ('$invoice_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y')";
+      $query1="insert into goods_invoice (invoice_no,goods_id,goods_partno,qty,discountrate,marketprice,status,description) values ('$invoice_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y','$goods_detail[$i]')";
+	  
       if (!mysql_query($query1))
      {
          $cherr=1;
          echo mysql_error();
       }
 
-//      $query2="update goods set stock=stock-$un[$i] where goods_id='$goods_id[$i]'";
-//      if (!mysql_query($query2))
-//      {
-//         $cherr=2;
-//         echo mysql_error();
-//      }
-//   }
+ 
   }
    if ($cherr==0)
    {

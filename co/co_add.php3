@@ -130,6 +130,8 @@ $today=Date("d/m/Y");
          {
          $goods_detail[$i]=$detail;
          }
+		  $goods_detail[$i]=stripslashes($goods_detail[$i]);
+		 $goods_detail[$i]=addslashes($goods_detail[$i]);
         // }
 
    }
@@ -168,19 +170,21 @@ else if ($customer=="y")
       $query="insert into co (co_no,co_date,sales_name,customer_name,customer_tel,customer_detail,status) values ('$co_no',now(),'$sales_name','$customer_name','$customer_tel','$customer_detail','Y')";
  }  
  //if success to add then add goods_co DB
-      
+    
+ 	
    if (!mysql_query($query))
     $cherr=3;
    else
    {
     for ($i=1;$i<$gitem+1;$i++) //insert goods_co
      {
-     $query1="insert into goods_co (co_no,goods_id,goods_partno,qty,discountrate,marketprice,status) values ('$co_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y')";
+     $query1="insert into goods_co (co_no,goods_id,goods_partno,qty,discountrate,marketprice,status,description) values ('$co_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y','$goods_detail[$i]')";
+	 
      if (!mysql_query($query1))
      {
         $cherr=1;
      }
-     
+      $goods_detail[$i]=stripslashes($goods_detail[$i]);
     }
    }
    

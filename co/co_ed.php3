@@ -63,38 +63,7 @@
       }
    }
 
-/* remove goods_id 10-7-02
-for ($i=1;$i<$nitem;$i++)
-   {
-      $cha="";
-      for ($j=0;$j<13;$j++)
-      {
-         if (empty($goods_id[$i]))  //check goods_id if empty
-            break;
-
-         $ch=substr($goods_id[$i],$j,1);
-
-         if ($ch==" ")  //change the space to "-"
-            $ch="-";
-
-         $cha=$cha.$ch;
-      }
-      $goods_id[$i]=$cha;
-   
-      if (empty($market_price[$i]))  //match the ext_price and market_price
-      {
-         $extps=mysql_query("select market_price from goods where goods_partno=$goods_partno");
-         if (!empty($extps))
-         {
-            $extp=mysql_fetch_row($extps);
-            echo mysql_error();
-            list($ext)=$extp;
-            $market_price[$i]=$ext;
-         }
-      }
-   }
-
-*/
+ 
 
    $gitem=0; //check how many input goods item.
    for ($i=1;$i<$nitem+1;$i++)
@@ -105,31 +74,7 @@ for ($i=1;$i<$nitem;$i++)
          break;
       }
    }
-   //delete at 29-10-01 cos no check market detail copy new in po_add.php3
-   //$chext=0;
- //  for ($i=1;$i<$gitem+1;$i++)
-  // {
- //    if (empty($market_price[$i]))
-  //    {
-  //       $chpr=mysql_query("select market_price from sumgoods where goods_id='$goods_id[$i]'");
-  //       if (!empty($chpr))
-  //       {
-  //          $chprs=mysql_fetch_row($chpr);
-  //          list($lchpr)=$chprs;
-  //          $market_price[$i]=$lchpr;
-  //       }
-  //       else
-  //       {
-  //          $chext=1;
-  //       }
-  //    }
-  // }
-  //   if ($chext==1)
-  // {
-  //   echo "沒有貨物編號, 請從新輸入! ";
-  //   exit();
-  // }
-   // find the marketprice detail from sumgoods to the goods_id
+    
    //added at 291001
    for ($i=1;$i<=$gitem;$i++)
    {
@@ -144,8 +89,9 @@ for ($i=1;$i<$nitem;$i++)
          {
          $goods_detail[$i]=$detail;
          }
-
-
+		 
+		 $goods_detail[$i]=stripslashes($goods_detail[$i]);
+		 $goods_detail[$i]=addslashes($goods_detail[$i]);
    }
    
    //added at 291001
@@ -182,31 +128,7 @@ for ($i=1;$i<$nitem;$i++)
      $cherr=3;
     echo mysql_error();
    }
-//
-//   else
-//   {
-//      $query5="select goods_id,un from goods_po where po_no=$po_no"; //add the goods before deleted
-//      $gunss=mysql_query($query5);
-//      if ($guns)
-//      {
-//         $cherr=5;
-//         echo mysql_error();
-//      }
-//
-//      else
-//      {
-//         while($guns=mysql_fetch_row($gunss))
-//         {
-//            list($gid,$gun)=$guns;
-//            $query6="update goods set stock=stock+$gun where goods_id=$gid";
-//            if (!mysql_query($query6))
-//            {
-//               $cherr=6;
-//               echo mysql_error();
-//            }
- //        }
-//
-//      }
+ 
 
 
 $query4="delete from goods_co where co_no=$co_no";  //delete old record
@@ -216,20 +138,14 @@ $query4="delete from goods_co where co_no=$co_no";  //delete old record
 
    for ($i=1;$i<$gitem+1;$i++)
    {
-      $query1="insert into goods_co (co_no,goods_id,goods_partno,qty,discountrate,marketprice,status) values ('$co_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y')";
+      $query1="insert into goods_co (co_no,goods_id,goods_partno,qty,discountrate,marketprice,status,description) values ('$co_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y','$goods_detail[$i]')";
       if (!mysql_query($query1))
      {
          $cherr=1;
          echo mysql_error();
       }
-
-//      $query2="update goods set stock=stock-$un[$i] where goods_id='$goods_id[$i]'";
-//      if (!mysql_query($query2))
-//      {
-//         $cherr=2;
-//         echo mysql_error();
-//      }
-//   }
+	 $goods_detail[$i]=stripslashes($goods_detail[$i]);
+ 
   }
    if ($cherr==0)
    {

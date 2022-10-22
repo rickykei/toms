@@ -3,9 +3,7 @@
 <title>(invoice) toms & trd shop</title>
 <meta http-equiv="Content-Type" content="text/html; charset=big5">
 <LINK REL=stylesheet HREF="english.css" TYPE="text/css">
-
-
-
+ 
 <script language="JavaScript">
 function checkform()
 {
@@ -33,9 +31,8 @@ function check_record1()
         }
 
 }
-<!--
-
-<!--
+ 
+ <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
   if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
     document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
@@ -62,13 +59,54 @@ function MM_showHideLayers() { //v3.0
 </script>
 </head>
 
+
+<?php
+include_once("./include/config.php");
+  $co_no=$_GET['co_no']; 
+   $connection = DB::connect($dsn);
+
+   if (DB::isError($connection))
+      die($connection->getMessage());
+ 
+ if ($co_no!=""){
+	$query="select * from co where co_no=".$co_no;
+  
+  $result=$connection->query($query);
+  
+	while($coRow = $result->fetchRow(DB_FETCHMODE_ASSOC)){
+		$co_date=$coRow['co_date'];
+		$sales_name=$coRow['sales_name'];
+		$customer_name=$coRow['customer_name'];
+		$customer_tel=$coRow['customer_tel'];
+		$customer_car_no=$coRow['customer_detail'];
+		$member_id=$coRow['member_id'];
+		if ($member_id=="0") $member_id="";
+		
+	}
+	
+	$sql="select * from goods_co where co_no=".$co_no." order by id asc";
+	$goodsCoResult = $connection->query($sql);
+	$i=0;
+	while($goodsCoRow = $goodsCoResult->fetchRow(DB_FETCHMODE_ASSOC)){
+		$goods_partno[$i]=$goodsCoRow['goods_partno'];
+		$qty[$i]=$goodsCoRow['qty'];
+		$discountrate[$i]=$goodsCoRow['discountrate'];
+		$goods_detail[$i]=$goodsCoRow['description'];
+		$marketprice[$i]=$goodsCoRow['marketprice'];
+		$i++;
+	}
+ }
+		//print_r($goods_partno);
+	
+?>
+
 <body bgcolor="#0066cc" text="#000000">
 <form name="form1" method="post" action="invoiceadd.php3" enctype="multipart/form-data">
   <table width="79%" border="0">
     <tr> 
       <td><font face="新細明體" color="#FFFFFF" size="2">發票編號.:</font></td>
       <td><font face="新細明體" color="#FFFFFF" size="2"> 
-        <input type="text" name="textfield" value='<?include("config.php3");
+        <input type="text" name="textfield" value='<? 
          $query="select invoice_no from invoice order by invoice_no desc";
 	 $query2="select * from staff where status='Y' order by staff_name";
 	$rows=mysql_query($query);
@@ -121,20 +159,20 @@ list($invoice_no)=$row;
       <tr> 
         <td><font face="新細明體" color="#FFFFFF" size="2">買貨人:</font></td>
         <td><font face="新細明體" color="#FFFFFF" size="2"> 
-          <input type="text" name="customer_name" class="login">
+          <input type="text" name="customer_name" class="login" value="<?php echo $customer_name;?>">
           </font></td>
       </tr>
       <tr> 
         <td><font face="新細明體" color="#FFFFFF" size="2">電話: </font></td>
         <td><font face="新細明體" color="#FFFFFF" size="2"> 
-          <input type="text" name="customer_tel" class="login">
+          <input type="text" name="customer_tel" class="login" value="<?php echo $customer_tel;?>">
           </font></td>
       </tr>
       <tr >
         <td><font face="新細明體" color="#FFFFFF" size="2">車牌號碼: </font></td>
         
         <td><font face="新細明體" color="#FFFFFF" size="2">
-          <input type="text" name="customer_car_no" class="login" >
+          <input type="text" name="customer_car_no" class="login" value="<?php echo $customer_car_no;?>">
           </font></td>
           
           <td><font face="新細明體" color="#FFFFFF" size="2">車種: </font></td>
@@ -156,7 +194,7 @@ list($invoice_no)=$row;
       <tr>
         <td width="25%"><font face="新細明體" color="#FFFFFF" size="2">會員編號: </font></td>
         <td width="75%"><font face="新細明體" color="#FFFFFF" size="2"> 
-          <input type="text" name="member_id" class="login">
+          <input type="text" name="member_id" class="login" value="<?php echo $member_id;?>">
           </font>
 <a href="JavaScript:check_record1();"><img src="submit2.png" width="20" height="10" border="0"></a>
 </td>
@@ -227,19 +265,23 @@ list($invoice_no)=$row;
 */
 ?>
       <td width="21%"> 
-        <input type="text" name="goods_partno[<?echo $input;?>]" class="login" size="20" maxlength="20">
+        <input type="text" name="goods_partno[<?echo $input;?>]" class="login" size="20" maxlength="20" value="<?php echo $goods_partno[$input-1];?>">
       </td>
       <td width="22%"> 
-        <input type="text" name="goods_detail[<?echo $input;?>]" class="login" size="20" maxlength="50">
+        <input type="text" name="goods_detail[<?echo $input;?>]" class="login" size="20" maxlength="50" value="<?php echo $goods_detail[$input-1];?>">
       </td>
       <td width="11%"><font color="#FFFFFF" size="2">x 
-        <input type="text" name="qty[<?echo $input;?>]" size="5" value="1" class="login" maxlength="5">
+	  <?php if ($co_no!=""){ ?>
+        <input type="text" name="qty[<?echo $input;?>]" size="5"  class="login" maxlength="5" value="<?php echo $qty[$input-1];?>">
+	  <?php } else { ?>
+	  <input type="text" name="qty[<?echo $input;?>]" size="5" value="1" class="login" maxlength="5" >
+	  <?php }?>
         </font></td>
       <td width="9%"> 
-        <input type="text" name="discountrate[<?echo $input;?>]" size="3" class="login" maxlength="3" value="0">
+        <input type="text" name="discountrate[<?echo $input;?>]" size="3" class="login" maxlength="3" value="<?php echo $discountrate[$input-1];?>">
         <font color="#FFFFFF" size="3">%</font> </td>
       <td width="8%"> 
-        <input type="text" name="market_price[<?echo $input;?>]" class="login" size="4" maxlength="10">
+        <input type="text" name="market_price[<?echo $input;?>]" class="login" size="4" maxlength="10" value="<?php echo $marketprice[$input-1];?>">
       </td>
     </tr>
     <?

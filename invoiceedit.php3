@@ -30,19 +30,20 @@ $query = "select * from invoice , goods_invoice where  invoice.invoice_no = good
    else
    {
       $row=mysql_fetch_row($rows);
-      list($id,$invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$gid,$ref_no,$goods_id1,$goods_partno,$cost,$stock,$stockout,$place,$date,$gstatus,$gin_good_comp_name,$invoice_no1,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;  
+      list($id,$invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$goods_detail,$gid,$ref_no,$goods_id1,$goods_partno,$cost,$stock,$stockout,$place,$date,$gstatus,$gin_good_comp_name,$invoice_no1,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;  
       //list($invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$invoice_no1,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$customer_car_no,$customer_car_type)=$row;  
 
       $goodss=mysql_query("select * from goods_invoice where invoice_no=$invoice_no order by id asc"); //get goods item
       $i=1;
       while ($goods=mysql_fetch_row($goodss))
       {
-         list($giid,$giinvoice_no,$gigoods_id,$gigoods_partno,$giqty,$gidiscountrate,$gimarketprice,$gistatus)=$goods;
+         list($giid,$giinvoice_no,$gigoods_id,$gigoods_partno,$giqty,$gidiscountrate,$gimarketprice,$gistatus,$goods_detail)=$goods;
          $pgoods_id[$i]=$gigoods_id;
          $pgoods_partno[$i]=$gigoods_partno;
          $pqty[$i]=$giqty;
          $pdiscountrate[$i]=$gidiscountrate;
          $pmarket_price[$i]=$gimarketprice;
+		 $pgoods_detail[$i]=$goods_detail;
          $i++;
       }
 

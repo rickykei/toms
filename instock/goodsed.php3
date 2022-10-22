@@ -13,7 +13,7 @@
      if ($goods_partno!="")
      {
       
-       $query2="update goods set ref_no='ref_no',in_comp_name='$company_name',goods_partno='$goods_partno' , cost='$cost', stock='$stock',place='$place' where id='$id'";
+       $query2="update goods set ref_no='$ref_no',in_comp_name='$company_name',goods_partno='$goods_partno' , cost='$cost', stock='$stock',place='$place' where id='$id'";
         if (mysql_query($query2))
         echo "Success!";
         else

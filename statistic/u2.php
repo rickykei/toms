@@ -25,8 +25,8 @@ echo $exp_date;
 
 include("./config.php3"); 
 
-$qry="select *,round(sum(round(goods_invoice.marketprice*((100-goods_invoice.discountrate)/100))*goods_invoice.qty),2) as aa from invoice,goods_invoice where invoice.invoice_no=goods_invoice.invoice_no and invoice.invoice_date >= \"$handin\" && invoice.invoice_date <= \"$exp_date\" group by invoice.invoice_no order by invoice.invoice_date ";
-echo $qry;
+$qry="select *,round(sum(round(goods_invoice.marketprice*(100-goods_invoice.discountrate)/100)*goods_invoice.qty),2) as aa from invoice,goods_invoice where invoice.invoice_no=goods_invoice.invoice_no and invoice.invoice_date >= \"$handin\" && invoice.invoice_date <= \"$exp_date\" group by invoice.invoice_no order by invoice.invoice_date ";
+
 $result=mysql_query($qry);
 $count = mysql_num_fields($result);
 //echo "<p>".$count."p";
@@ -138,7 +138,7 @@ $str_=str_replace("</tr>","\n",$str_);
 
 $date=date("d-m-y_h-i-s");
 $openstring=$date.".csv";
-$fp=fopen("/home/vhost/tomsracing.com.hk/statistic/record/$date.csv","w");
+$fp=fopen("/home/vhost/tomsracing.com/statistic/record/$date.csv","w");
 fputs($fp,$str_);
 fclose($fp);
 echo "</table>";
@@ -167,6 +167,14 @@ echo "<a href=\"./record/".$date.".csv\"> download excel format</a>";
 <option value="2010">2010</option>
 <option value="2011">2011</option>
 <option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
 
         </select>
         ды 
@@ -236,6 +244,15 @@ echo "<a href=\"./record/".$date.".csv\"> download excel format</a>";
 <option value="2010">2010</option>
 <option value="2011">2011</option>
 <option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+
         </select>
         ды 
         <select name="exp_month">

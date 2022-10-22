@@ -15,18 +15,19 @@
    else
    {
       $row=mysql_fetch_row($rows);
-      list($id,$co_no,$goods_id,$qty,$discountrate,$marketprice,$gistatus,$goods_partno,$gid,$ref_no,$goods_id1,$goods_partno1,$cost,$stock,$stockout,$place,$date,$gstatus,$in_comp_name,$co_no1,$co_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$pstatus)=$row;  
+      list($id,$co_no,$goods_id,$qty,$discountrate,$marketprice,$gistatus,$goods_partno,$description,$gid,$ref_no,$goods_id1,$goods_partno1,$cost,$stock,$stockout,$place,$date,$gstatus,$in_comp_name,$co_no1,$co_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$pstatus)=$row;  
 
       $goodss=mysql_query("select * from goods_co where co_no=$co_no order by id asc"); //get goods item
       $i=1;
       while ($goods=mysql_fetch_row($goodss))
       {
-         list($giid,$gico_no,$gigoods_id,$giqty,$gidiscountrate,$gimarketprice,$gistatus,$gigoods_partno)=$goods;
+         list($giid,$gico_no,$gigoods_id,$giqty,$gidiscountrate,$gimarketprice,$gistatus,$gigoods_partno,$gigoods_detail)=$goods;
          //$pgoods_id[$i]=$gigoods_id;
          $pgoods_partno[$i]=$gigoods_partno;
          $pqty[$i]=$giqty;
          $pdiscountrate[$i]=$gidiscountrate;
          $pmarket_price[$i]=$gimarketprice;
+		 $pgoods_detail[$i]=$gigoods_detail;
          $i++;
       }
 

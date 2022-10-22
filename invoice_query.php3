@@ -254,6 +254,7 @@ $offset=0;
              <td>­×§ï </td>
               <td>RTF¦C¦L </td>
              <td>PDF¦C¦L </td>
+			 <td>Email PDF</td>
            </tr>
 		 <?php
       $chodd=0;
@@ -385,7 +386,13 @@ $offset=0;
                        echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
 		     
                        echo '</form></td>',"\n";
-
+					   
+						echo '<td ',$bgcolor,'><form name="form3" method="post" action="./invoice/pdf/',$row['invoice_no'],'.pdf">',"\n";
+                       echo '<input type="hidden" name="invoice_no" value=',$row['invoice_no'],' class="login">',"\n";
+                       echo '<input type="submit" name="submit" value="PRINT" class="login">',"\n";
+		     
+                       echo '</form></td>',"\n";
+					   
               echo '</tr>',"\n";
               $chodd=$chodd+1;
            }

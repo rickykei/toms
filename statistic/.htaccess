@@ -1,0 +1,4 @@
+AuthName "statistic"
+AuthType Basic
+AuthUserFile /home/vhost/tomsracing.com/statistic/.htpasswd
+require valid-user

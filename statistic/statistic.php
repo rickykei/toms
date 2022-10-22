@@ -3,13 +3,13 @@
 </head>
 <body bgcolor="#0066cc" text="#000000">
 <?
-include("./config.php3"); 
+include("config.php3"); 
 function printcalendar($month,$year)
 {
 $pass_salt="1";
 $pass_plain="1";
-$action = crypt($pass_plain, $pass_salt); 
-
+//$action = crypt($pass_plain, $pass_salt); 
+$action=2;
 if(!$day)
 {$day = date(d);}
 if(!$month)

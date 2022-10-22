@@ -42,6 +42,11 @@ $this->SetXY(0,-1);
 
   $this->setJPEGQuality(80);
   
+  
+   
+	 $this->Cell($c7,6,"",$border,1,'R',0);
+	 
+	 
  $this->Cell(5,16,"",$border,0,'L',0);
    $this->Image('../pdf3/tomstrd_logo.jpg', '', '', 120, 17, 'JPG', '', 'T', false, 120, '', false, false, 0, false, false, false);
      $this->Cell(50,16," ",$border,0,'L',0);
@@ -71,7 +76,7 @@ $this->SetXY(0,-1);
     $this->SetFont($fontname,'',10,false);
    $this->Cell(50,5,"傳真: (852) 2783 0449",$border,1,'R',0);	
 
-$this->SetY(42);
+$this->SetY(48);
 
 	$this->SetFont($fontname,'',7,false);
 	$this->Cell($c0,$h,"",$border,0,'L',0);
@@ -94,7 +99,7 @@ $this->SetY(42);
 	 $this->Cell($c7,$h,"".$co_date."",$border,1,'L',0);	 
 	 
 	 
-	$this->SetY(62);
+	$this->SetY(68);
 
 
 	 $this->SetFont($fontname,'',10,false); 
@@ -111,7 +116,7 @@ $this->SetY(42);
 	 
 	  $this->SetFont($fontname,'',10,false); 
  //$this->Ln(22);
- $this->SetY(68);
+ $this->SetY(74);
  $h=6;
  $c1=5;
  $c2=30;
@@ -132,7 +137,7 @@ $this->SetY(42);
 	 $this->Cell($c4,$h,$qty[$i]."","LR",0,'C',0);
 	 $this->Cell($c5,$h,number_format($market_price[$i],2)."","LR",0,'R',0);
 			 //20091201 rounding invoice >74102
-			if ($invoice_no>74102){
+			if ($co_no>2417){
 				// round 20091201
 			 $this->Cell($c6,$h,"".number_format(round($market_price[$i]-($market_price[$i]*$discountrate[$i]/100)),2),"LR",0,'R',0);
 			 $this->Cell($c7,$h,"".number_format(round(round($market_price[$i]-($market_price[$i]*$discountrate[$i]/100))*$qty[$i]),2),"LR",1,'R',0);
@@ -230,22 +235,14 @@ $h=5;
 	$this->Cell(40,$h,"",$border,0,'L',0);
     $this->Cell($c7,$h,"",$border,1,'R',0);
 	
-	  $this->SetFont($fontname,'',8,false); 
-    $this->Cell($c1,$h,"",$border,0,'L',0);
-	$this->Cell(50,$h,"",$border,0,'L',0);
-	$this->Cell(20,$h,"",$border,0,'R',0);
-	$this->SetFont($fontname,'',8,false); 
-	$this->Cell(40,$h,"",$border,0,'L',0);
-    $this->Cell($c7,$h,"",$border,1,'R',0);
+ 
 	
 	 $h=5;  
     $this->SetFont($fontname,'',8,false); 
     $this->Cell($c1,$h,"",$border,0,'L',0);
 	$this->Cell(60,$h,"銀行轉帳 Bank A/C:","B",0,'L',0);
-	
 	$this->Image('../pdf3/qrcode.jpg', '', '', 40, 40, 'JPG', '', 'T', false, 150, '', false, false, 0, false, false, false);
-	
-    $this->Cell($c7,$h,"",$border,1,'R',0);
+	$this->Cell($c7,$h,"",$border,1,'R',0);
 	
 	 
 	
@@ -339,8 +336,8 @@ $h=5;
 
 //$pdf=new pdf('P','mm',array(216,217));
 $pdf=new pdftoms('P','mm','A4', true, 'UTF-8', false);
-$pdf->SetAutoPageBreak(true,2);
-$pdf->SetTopMargin(1);
+$pdf->SetAutoPageBreak(true,2 );
+$pdf->SetTopMargin(0);
 $pdf->SetLeftMargin(0);
 //$fontname = TCPDF_FONTS::addTTFfont('d:/github/yrt/pdf3/fonts/DroidSansFallback.ttf', 'TrueTypeUnicode', '', 96);
  $fontname="msungstdlight";

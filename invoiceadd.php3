@@ -149,9 +149,9 @@ $today=Date("d/m/Y");
 
  //insert to invoice DB
         $temp_date=date('Y-m-d G:i:s');
-        echo $temp_date;
+         
         //$temp_date="2002-08-21 20:34:02";
-        echo $temp_date;
+        
          $query="select invoice_no from invoice order by invoice_no desc";
          $rows=mysql_query($query);
          $row=mysql_fetch_row($rows);
@@ -179,7 +179,7 @@ $today=Date("d/m/Y");
  }
 
  //        $invoice_no=$invoice_no+1;
-         echo $invoice_no; 
+         
 		 $query="insert into invoice(invoice_no,invoice_date,sales_name,customer_name,customer_tel,customer_detail,customer_car_no,customer_car_type,member_id,status,mile) values ('','$temp_date','$sales_name','$customer_name','$customer_tel','$customer_detail','$customer_car_no','$customer_car_type','$member_id','Y','$mile')";
 
  mysql_query($query);
@@ -203,7 +203,8 @@ $today=Date("d/m/Y");
 	// find out the invoiceno add it b4 20-8-2002   
 	for ($i=1;$i<$gitem+1;$i++) //insert goods_invoice
      	{
-     $query1="insert into goods_invoice (invoice_no,goods_id,goods_partno,qty,discountrate,marketprice,status) values ('$invoice_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y')";
+     $query1="insert into goods_invoice (invoice_no,goods_id,goods_partno,qty,discountrate,marketprice,status,description) values ('$invoice_no','$goods_id[$i]','$goods_partno[$i]',$qty[$i],'$discountrate[$i]','$market_price[$i]','Y','$goods_detail[$i]')";
+ 
      if (!mysql_query($query1))
      {
         $cherr=1;
