@@ -3,37 +3,39 @@
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=big5">
 <LINK REL=stylesheet HREF="english.css" TYPE="text/css">
-<?
- 
-error_reporting(0);
+<?php 
+	error_reporting(0);
+	include_once("config.php3");
 
-   include("config.php3");
-
-   //$query="select * from goods_invoice left join goods on goods_invoice.goods_id=goods.goods_id left join invoice on goods_invoice.invoice_no=invoice.invoice_no where goods_invoice.invoice_no=$ed";
-$query = "select * from invoice , goods_invoice where  invoice.invoice_no = goods_invoice.invoice_no and invoice.invoice_no=$ed";
-   //$query= "Select i.invoice_no,gi.goods_id,gi.goods_partno,gi.qty,gi.discountrate,gi.marketprice,gi.status,i.invoice_no,i.invoice_date,i.sales_name,i.customer_name,i.customer_tel,i.customer_detail,i.member_id,i.customer_car_no,i.customer_car_type from goods_invoice as gi,invoice as i ,goods as g where g.goods_id=gi.goods_id and gi.invoice_no=i.invoice_no and i.invoice_no=$ed";
+   
+   $query="select invoice_no from invoice where invoice_no =$ed";
+   
    $rows2=mysql_query($query);
  
    if (mysql_num_rows($rows2)==0)
    {
-  // echo "Too Bad!1";
-   $query="select * from invoice where invoice_no =$ed";
-   $rows=mysql_query($query);
-    $row=mysql_fetch_row($rows);
-      list($invoice_no, $invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;  
+	   echo "Too Bad! Can't find invoice reocrd";
+	  
    }else{
    
-   $query="select * from goods_invoice left join goods on goods_invoice.goods_id=goods.goods_id left join invoice on goods_invoice.invoice_no=invoice.invoice_no where goods_invoice.invoice_no=$ed";
-   $rows=mysql_query($query);
-   if (!$rows)
-      echo "Too Bad!";
+		$query="SELECT i.invoice_no, goods_id, goods_partno, qty, discountrate, marketprice, gi.status, gi.description, gi.invoice_no, invoice_date, sales_name, customer_name, customer_tel, customer_detail, member_id, i.status, customer_car_no, customer_car_type, mile
+FROM goods_invoice AS gi
+LEFT JOIN invoice AS i ON gi.invoice_no = i.invoice_no
+WHERE gi.invoice_no =$ed";
+		
+  $rows=mysql_query($query);
+   if (!$rows){
+	 
+			echo "There is an invoice record , but item records not found";
+   }
    else
    {
       $row=mysql_fetch_row($rows);
-      list($id,$invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$goods_detail,$gid,$ref_no,$goods_id1,$goods_partno,$cost,$stock,$stockout,$place,$date,$gstatus,$gin_good_comp_name,$invoice_no1,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;  
-      //list($invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$invoice_no1,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$customer_car_no,$customer_car_type)=$row;  
-
-      $goodss=mysql_query("select * from goods_invoice where invoice_no=$invoice_no order by id asc"); //get goods item
+      list($invoice_no,$goods_id,$goods_partno,$qty,$discountrate,$marketprice,$gistatus,$goods_detail, $invoice_no,$invoice_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$istatus,$customer_car_no,$customer_car_type,$mile)=$row;   
+		$goods_invoice_sql="select id,invoice_no,goods_id,goods_partno,qty,discountrate,marketprice,status,description from goods_invoice where invoice_no=$invoice_no order by id asc";
+	 
+      $goodss=mysql_query($goods_invoice_sql);  
+	  
       $i=1;
       while ($goods=mysql_fetch_row($goodss))
       {
@@ -48,17 +50,11 @@ $query = "select * from invoice , goods_invoice where  invoice.invoice_no = good
       }
 
 
-//change at 12-6-01
-     // $d=substr($invoice_date,8,2);    //set date format
-      //$m=substr($invoice_date,5,2);
-      //$y=substr($invoice_date,0,4);
-      //$invoice_date=$d."/".$m."/".$y;
-
  
 
    }
    }
-        if (!empty($member_id))     //check member
+    if (!empty($member_id))     //check member
       {
          $mem="checked";
          $nomem="";
@@ -89,8 +85,7 @@ function checkForm()
 
 }
 
-<!--
-
+ 
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
   if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
@@ -124,14 +119,15 @@ function MM_showHideLayers() { //v3.0
     <tr>
       <td width="12%"><font face="新細明體" color="#FFFFFF" size="2">發票編號.:</font></td>
       <td width="38%"><font face="新細明體" color="#FFFFFF" size="2"> 
-        <input type="text" name="textfield" value='<? echo $invoice_no; ?>' class="login">
-        <?
-         echo '<input type="hidden" name="invoice_no" value=',$invoice_no,' class="login">';
+         <?php echo $invoice_no; 
+         echo '<input type="hidden" name="invoice_no" value="',$invoice_no,'">';
      ?>
         </font></td>
       <td width="14%"><font face="新細明體" color="#FFFFFF" size="2">發票日期: </font></td>
       <td width="36%"><font face="新細明體" color="#FFFFFF" size="2"> 
-        <input type="text" name="invoice_date" value='<? echo $invoice_date ?>' class="login">
+         <?php echo $invoice_date;
+		 echo '<input type="hidden" name="invoice_date" value="',$invoice_date,'">';
+		 ?> 
         </font></td>
     </tr>
     <tr>
@@ -147,13 +143,12 @@ function MM_showHideLayers() { //v3.0
         </font></td>
     </tr>
   </table>
-  <p>&nbsp; </p>
-  <p><font face="新細明體" color="#FFFFFF" size="2"> </font></p>
+ 
   <p>&nbsp;</p>
   <blockquote> 
     <p>&nbsp;</p>
     </blockquote>
-  <div id="Layer1" style="position:absolute; width:700px; height:124px; z-index:1; left: 24px; top: 138px; visibility:<? echo $nomemshow; ?>"> 
+  <div id="Layer1" style="position:absolute; width:700px; height:124px; z-index:1; left: 24px; top: 80px; visibility:<? echo $nomemshow; ?>"> 
      <table width="90%" border="0">
       <tr> 
         <td><font face="新細明體" color="#FFFFFF" size="2">買貨人:</font></td>
@@ -187,7 +182,7 @@ function MM_showHideLayers() { //v3.0
       </tr>
     </table>
   </div>
-  <div id="Layer2" style="position:absolute; width:700px; height:39px; z-index:2; left: 11px; top: 158px; visibility:  <? echo $memshow; ?>">
+  <div id="Layer2" style="position:absolute; width:700px; height:30px; z-index:2; left: 11px; top: 100px; visibility:  <? echo $memshow; ?>">
  <table width="75%" border="0">
       <tr>
         <td width="25%"><font face="新細明體" color="#FFFFFF" size="2">會員編號: </font></td>
@@ -209,8 +204,7 @@ function MM_showHideLayers() { //v3.0
 		  </tr>
     </table>
   </div>
-    <p>&nbsp;</p>
-  <p>&nbsp;</p>
+ 
   <p>&nbsp;</p>
   <table width="661" border="1" bordercolor="#FFFFFF">
     <tr> 

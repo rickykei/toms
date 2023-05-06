@@ -133,7 +133,7 @@ $today=Date("d/m/Y");
          }
          if ($goods_detail[$i]=="")
          {
-         $goods_detail[$i]=$detail;
+         $goods_detail[$i]=addslashes($detail);
          }
         // }
 

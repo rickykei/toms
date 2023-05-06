@@ -1,15 +1,32 @@
-<? 
-   include("config.php3");
+<?php
+   include_once("config.php3");
+   include_once("./include/config.php");
+      $connection = DB::connect($dsn);
+
+   if (DB::isError($connection))
+      die($connection->getMessage());
+  
+  
+  
 if ($add==1)
 {
-
-$query1="update hkjp set hk=$hk where id=1";
- if( mysql_query ($query1))
+$hk=$_POST['hk'];
+$query1="update hkjp set hk=$hk ";
+ if( mysql_query($query1))
  echo "success";
  else
  echo "error";
  echo $hk;
           
+}else{
+  $query="select * from hkjp";
+  
+    $result=$connection->query($query);
+
+
+	while($coRow = $result->fetchRow(DB_FETCHMODE_ASSOC)){
+		$hk=$coRow['hk'];
+	}
 }?>
 <html>
 <head>
@@ -36,7 +53,7 @@ function checkform()
 </head>
 <body bgcolor="#0066cc" text="#000000">
 <form name=hkjpform method="post" action="hkjp.php3">
-  <p>1&yen;> $hk: 
+  <p>1&yen;> $hk <?php echo $hk;?>: 
     <input type="hidden" name="add" value=1 class="login">
     <input type="text" name="hk" maxlength="10" class="login">
   <p><a href="JavaScript:checkform();"><img src="submit.gif" border=0></a>

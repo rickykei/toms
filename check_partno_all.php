@@ -362,13 +362,19 @@ echo "</ststrong>";
     <td bgcolor="">
       <table width="100%" border="1" cellpadding="2" cellspacing="1" bgcolor=>
         <tr class=tablehead>
-          <td>?¥è²¨</td>
+          <td>¤J³f</td>
         </tr>
         <tr class=tableBGcolor>
           <td width="5%">id</td>
           <td width="10%">ref_no</td>
           <td width="10%">goods_partno</td>
-          <td width="10%">cost</td>
+          <td width="10%">HK cost</td>
+		  <td width="10%">rate</td>
+		  <td width="10%">jp_cost</td>
+		  <td width="10%">D/R</td>
+		  <td width="10%">jp price</td>
+		  <td width="10%">jp delivery</td>
+		  <td width="10%">jp paint</td>
           <td width="10%">stock</td>
           <td width="10%">stockout</td>
           <td width="10%">place</td>
@@ -385,6 +391,12 @@ echo "</ststrong>";
   	echo "<td width=\"10%\">".$row3["ref_no"]."</td>";
   	echo "<td width=\"10%\">".$row3["goods_partno"]."</td>";
   	echo "<td width=\"10%\">".$row3["cost"]."</td>";
+	echo "<td width=\"10%\">".$row3["jp_rate"]."</td>";
+	echo "<td width=\"10%\">".$row3["jp_cost"]."</td>";
+	echo "<td width=\"10%\">".$row3["discount"]."</td>";
+	echo "<td width=\"10%\">".$row3["jp_price"]."</td>";
+	echo "<td width=\"10%\">".$row3["jp_delivery"]."</td>";
+	echo "<td width=\"10%\">".$row3["jp_paint"]."</td>";
   	echo "<td width=\"10%\">".$row3["stock"]."</td>";
   	echo "<td width=\"10%\">".$row3["stockout"]."</td>";
   		if ($row3["place"]==1)
