@@ -15,7 +15,7 @@
    else
    {
       $row=mysql_fetch_row($rows);
-      list($id,$co_no,$goods_id,$qty,$discountrate,$marketprice,$gistatus,$goods_partno,$description,$gid,$ref_no,$goods_id1,$goods_partno1,$cost,$stock,$stockout,$place,$date,$gstatus,$in_comp_name,$co_no1,$co_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$pstatus)=$row;  
+      list($id,$co_no,$goods_id,$qty,$discountrate,$marketprice,$gistatus,$goods_partno,$description,$gid,$ref_no,$goods_id1,$goods_partno1,$cost,$stock,$stockout,$place,$date,$gstatus,$in_comp_name,$jp_price,$discount,$jp_delivery,$jp_paint,$jp_rate,$jp_cost,$co_no1,$co_date,$sales_name,$customer_name,$customer_tel,$customer_detail,$member_id,$pstatus)=$row;  
 
       $goodss=mysql_query("select * from goods_co where co_no=$co_no order by id asc"); //get goods item
       $i=1;
@@ -113,7 +113,7 @@ function MM_showHideLayers() { //v3.0
         </font></td>
       <td width="14%"><font face="新細明體" color="#000000" size="2">發票日期: </font></td>
       <td width="36%"><font face="新細明體" color="#000000" size="2"> 
-        <input type="text" name="co_date" value='<? echo $co_date ?>' class="login">
+        <input type="text" name="co_date" value='<? echo $co_date ?>' class="login" readonly>
         </font></td>
     </tr>
     <tr>

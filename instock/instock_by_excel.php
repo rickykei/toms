@@ -1,5 +1,6 @@
-<?
-include("../config.php3");
+<?php
+
+include_once("../config.php3");
 $result = mysql_query ("select * from hkjp ");
 $result2 = mysql_query ("select * from goods_company order by company_name");
 $result3 = mysql_num_rows($result2);

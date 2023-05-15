@@ -1,0 +1,4 @@
+AuthName "password"
+AuthType Basic
+AuthUserFile /home/vhost/tomsracing.com/.htpasswd
+require valid-user

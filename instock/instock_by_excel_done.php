@@ -1,6 +1,16 @@
 <?php
-include("../config.php3");
-	include '../classes/PHPExcel.php';
+	include_once("../config.php3");
+	include_once("../classes/PHPExcel.php");
+	
+	// get rate
+	$result = mysql_query ("select * from hkjp ");
+	$row=mysql_fetch_array ($result);
+	
+	$jp_rate=$row['hk'];
+	if ($jp_rate<=0)
+		$jp_rate=0.061;
+	
+	
 	//instock header
 	$ref_no=$_POST['ref_no'];
 	$company_name=$_POST['company_name'];
@@ -19,14 +29,20 @@ include("../config.php3");
 		//}
 		$rowNo = $row->getRowIndex();
 		$goods_partno = trim($ws->getCell("A".$rowNo)->getValue());
-		$cost = trim($ws->getCell("B".$rowNo)->getValue());
-		$qty = trim($ws->getCell("C".$rowNo)->getValue());
+		$qty = trim($ws->getCell("B".$rowNo)->getValue());
+		$jp_price = trim($ws->getCell("C".$rowNo)->getValue());
+		$discount = trim($ws->getCell("D".$rowNo)->getValue());
+		$jp_delivery = trim($ws->getCell("E".$rowNo)->getValue());
+		$jp_paint = trim($ws->getCell("F".$rowNo)->getValue());
+		$jp_cost= $jp_price*(1-$discount)+$jp_delivery+$jp_paint;
+		 
+		$cost= $jp_rate*$jp_cost;
 		
 		
 		
 		//insert db 1 record by 1
 		if ($goods_partno!="")    {
-		  $query3="insert into goods (ref_no,goods_id,goods_partno,cost,stock,stockout,place,date,status,in_comp_name) values ('$ref_no','$goods_partno','$goods_partno',$cost,'$qty',0,3,now(),'Y','$company_name')";
+		  $query3="insert into goods (ref_no,goods_id,goods_partno,cost,stock,stockout,place,date,status,in_comp_name,jp_price,discount,jp_delivery,jp_paint,jp_cost,jp_rate) values ('$ref_no','$goods_partno','$goods_partno',$cost,'$qty',0,3,now(),'Y','$company_name',$jp_price,$discount,$jp_delivery,$jp_paint,$jp_cost,$jp_rate)";
 		  if (mysql_query($query3))
 		   {
 				$success=1;

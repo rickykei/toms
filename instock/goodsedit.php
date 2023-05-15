@@ -7,6 +7,15 @@
 <?
    include("../include/config.php");
 
+
+	// get rate
+	$result = mysql_query ("select * from hkjp ");
+	$row=mysql_fetch_array ($result);
+	
+	$jp_rate_sys=$row['hk'];
+	if ($jp_rate_sys<=0)
+		$jp_rate_sys=0.061;
+	
    $query="select * from goods where id=$ed";
 
    $rows=mysql_query($query);
@@ -25,6 +34,12 @@
 	  $stock=$row['stock'];
 	  $place=$row['place'];
 	  $status=$row['status'];
+	  $jp_price=$row['jp_price'];
+	  $discount=$row['discount'];
+	  $jp_delivery=$row['jp_delivery'];
+	  $jp_paint=$row['jp_paint'];
+	  $jp_rate=$row['jp_rate'];
+	  $jp_cost=$row['jp_cost'];
 	  
       if ($place==1)     //check which place select.
          $HK="checked";
@@ -117,6 +132,23 @@ function MM_showHideLayers() { //v3.0
   <p><font  color="#FFFFFF" size="2">Stock: </font>
     <input type="text" name="stock" maxlength="9" value='<? echo $stock; ?>' class="login">
   </p>
+    <p><font  color="#FFFFFF" size="2">jp_price: </font>
+    <input type="text" name="jp_price" maxlength="9" value='<? echo $jp_price; ?>' class="login">
+  </p>
+      <p><font  color="#FFFFFF" size="2">discount: </font>
+    <input type="text" name="discount" maxlength="9" value='<? echo $discount; ?>' class="login">
+  </p>
+      <p><font  color="#FFFFFF" size="2">jp_delivery: </font>
+    <input type="text" name="jp_delivery" maxlength="9" value='<? echo $jp_delivery; ?>' class="login">
+  </p>
+
+      <p><font  color="#FFFFFF" size="2">jp_paint: </font>
+    <input type="text" name="jp_paint" maxlength="9" value='<? echo $jp_paint; ?>' class="login">
+  </p>
+  <p><font  color="#FFFFFF" size="2">jp_rate: </font>
+    <input type="text" name="jp_rate" maxlength="9" value='<? echo $jp_rate; ?>' class="login">
+  </p>
+
   <p><font  color="#FFFFFF" size="2">©ô¨¤ </font>
     <input type="radio" name="place" value="1" <? echo $HK; ?> class="login">
     <font  color="#FFFFFF" size="2">¤j³ò</font>
