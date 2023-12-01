@@ -292,7 +292,7 @@ $h=5;
 	 $h=5;  
     $this->SetFont($fontname,'',8,false); 
     $this->Cell($c1,$h,"",$border,0,'L',0);
-	$this->Cell(50,$h,"轉數快 FPS：63918395","",0,'L',0);
+	$this->Cell(50,$h,"轉數快 FPS：66553344","",0,'L',0);
 	$this->Cell(20,$h,"",$border,0,'R',0);
 	$this->SetFont($fontname,'',8,false); 
 	 	$this->Cell(40,$h,"",$border,0,'L',0);
