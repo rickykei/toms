@@ -1,15 +1,17 @@
 <?
    include("../include/config.php");
    
-  echo $goods_partno; 
+  
    
    // update at 18-6-02 add input data 30 item per times
    
     
-   
-   $jp_cost= $jp_price*(1-$discount)+$jp_delivery+$jp_paint;
+   if ($jp_price==0 || $jp_price==''){
+	echo $goods_partno;    
+   } else{
+	 $jp_cost= $jp_price*(1-$discount)+$jp_delivery+$jp_paint;
      $cost= $jp_rate*$jp_cost;
-		
+   }
      if ($goods_partno!="")
      {
       
