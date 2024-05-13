@@ -94,7 +94,7 @@ require('./pdf/chinese.php');
 include_once('./pdf/pdf.php');
 
 //$pdf=new pdf('P','mm',array(216,305));
-$pdf=new pdf('P','mm',array(216,308));
+$pdf=new pdf('P','mm',array(215,305));
 $pdf->SetAutoPageBreak(true,1);
 $pdf->SetTopMargin(0);
 $pdf->AddBig5Font();
