@@ -20,12 +20,13 @@ function Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invo
  
    $h=6;
  $c1=10;
- $c2=36;
+ $c2=31;
  $c3=80;
  $c4=22;
  $c5=5;
- $c6=20;
- $c7=25;
+ $c6=10;
+ $c7=24;
+
 
    $this->Cell($c1,$h,"",0,0,'L',0);
 	 $this->Cell($c2,$h,"",0,0,'L',0);
@@ -34,8 +35,8 @@ function Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invo
 	 $this->Cell($c5,$h,"",0,0,'R',0);
 	 $this->Cell($c6,$h,"",0,0,'R',0);
 	 $this->Cell($c7,$h,"",0,1,'R',0);
-$this->SetFont('times','B',14); 
-$this->SetY(52);
+$this->SetFont('times','B',10); 
+$this->SetY(54);
 $this->Cell($c1,$h,"",$border,0,'L',0);
 	 $this->Cell($c2,$h,"",$border,0,'L',0);
 	 $this->Cell($c3,$h,"",$border,0,'R',0);
@@ -45,7 +46,7 @@ $this->Cell($c1,$h,"",$border,0,'L',0);
 	 $this->Cell($c7,$h,"CUSTOMER ORDER",$border,1,'R',0);
 $this->SetFont('Big5','',10); 
 
-$this->SetY(62);
+$this->SetY(64);
    $this->Cell($c1,$h,"",$border,0,'L',0);
 	 $this->Cell($c2,$h,$customer_name,$border,0,'L',0);
 	 $this->Cell($c3,$h,$customer_car_no,$border,0,'R',0);
@@ -54,7 +55,7 @@ $this->SetY(62);
 	 $this->Cell($c6,$h,"",$border,0,'R',0);
 	 $this->Cell($c7,$h,"C/O: ".$invoice_no."",$border,1,'R',0);
 
-$this->SetY(72);
+$this->SetY(74);
    $this->Cell($c1,$h,"",$border,0,'L',0);
  $this->Cell($c2,$h,$customer_tel,$border,0,'L',0);
 	 $this->Cell($c3,$h,"",$border,0,'L',0);
@@ -63,16 +64,18 @@ $this->SetY(72);
 	 $this->Cell($c6,$h,"",$border,0,'R',0);
 	 $this->Cell($c7,$h,"".$invoice_date."",$border,1,'R',0);	 
  //$this->Ln(22);
- $this->SetY(93);
+ $this->SetY(90);
  $h=6;
  $c1=6;
- $c2=42;
+ $c2=38;
  $c3=86;
  $c4=10;
- $c5=18;
- $c6=20;
- $c7=25;
+ $c5=15;
+ $c6=17;
+ $c7=26;
  $total=0;
+   $this->SetFont('Big5','',9);
+   
 	for ($i=1;$i<count($goods_partno);$i++)
 	{
 		if ($goods_partno[$i]=="")
@@ -100,7 +103,7 @@ $this->SetY(72);
 	
 	}
 	 	 
-  $this->SetY(250); 
+  $this->SetY(245); 
   
 	 $this->Cell($c2,$h,"",0,0,'L',0);
 	 $this->Cell($c3,$h,"",0,0,'L',0);
