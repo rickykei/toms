@@ -16,7 +16,7 @@ function Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invo
  $this->SetTextColor(0);
  $this->SetFont('Big5','',10);
  $this->SetDrawColor(0,0,0);
- $border="1";
+ $border="0";
  
    $h=6;
  $c1=10;
@@ -35,7 +35,7 @@ function Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invo
 	 $this->Cell($c6,$h,"",0,0,'R',0);
 	 $this->Cell($c7,$h,"",0,1,'R',0);
 
-$this->SetY(65);
+$this->SetY(64);
    $this->Cell($c1,$h,"",$border,0,'L',0);
 	 $this->Cell($c2+7,$h,$customer_name,$border,0,'L',0);
 	  $this->SetFont('Big5','',8);
@@ -45,7 +45,7 @@ $this->SetY(65);
 	 $this->Cell($c6+18,$h,"",$border,0,'R',0);
 	 $this->Cell($c7,$h,"INVOICE NO: T".$invoice_no."",$border,1,'R',0);
 
-$this->SetY(75);
+$this->SetY(74);
    $this->Cell($c1,$h,"",$border,0,'L',0);
 	 $this->Cell($c2,$h,$customer_tel,$border,0,'L',0);
 	 $this->Cell($c3,$h,"",$border,0,'L',0);
@@ -54,7 +54,7 @@ $this->SetY(75);
 	 $this->Cell($c6,$h,"",$border,0,'R',0);
 	 $this->Cell($c7,$h,"".$invoice_date."",$border,1,'R',0);	 
  //$this->Ln(22);
- $this->SetY(93);
+ $this->SetY(90);
  $h=6;
  $c1=6;
  $c2=38;
@@ -62,7 +62,7 @@ $this->SetY(75);
  $c4=10;
  $c5=15;
  $c6=17;
- $c7=25;
+ $c7=26;
  $total=0;
   $this->SetFont('Big5','',9);
 	for ($i=1;$i<count($goods_partno);$i++)
@@ -90,7 +90,7 @@ $this->SetY(75);
 	 
 	}
 	 	 
-  $this->SetY(220); 
+  $this->SetY(245); 
   
 	 $this->Cell($c2,$h,"",$border,0,'L',0);
 	 $this->Cell($c3,$h,"",$border,0,'L',0);
