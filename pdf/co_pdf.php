@@ -25,7 +25,7 @@ function Body($goods_partno,$goods_detail,$qty,$market_price,$discountrate,$invo
  $c4=22;
  $c5=5;
  $c6=10;
- $c7=24;
+ $c7=28;
 
 
    $this->Cell($c1,$h,"",0,0,'L',0);
